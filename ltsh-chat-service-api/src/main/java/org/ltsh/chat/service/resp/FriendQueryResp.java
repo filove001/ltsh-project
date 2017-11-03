@@ -26,9 +26,13 @@ public class FriendQueryResp extends BaseResp {
     /**
      * 好友用户id
      */
-    private String friendUserId;
+    private Integer friendUserId;
     /**
      * 排序
      */
     private Integer sort;
+    /**
+     * 创建用户
+     */
+    private Integer createBy;
 }

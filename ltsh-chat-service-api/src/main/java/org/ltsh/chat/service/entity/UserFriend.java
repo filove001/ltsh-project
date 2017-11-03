@@ -29,7 +29,7 @@ public class UserFriend extends BaseEntity {
     /**
      * 好友用户id
      */
-    private String friendUserId;
+    private Integer friendUserId;
     /**
      * 排序
      */
