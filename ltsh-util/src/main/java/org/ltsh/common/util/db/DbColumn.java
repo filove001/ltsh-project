@@ -1,4 +1,4 @@
-package org.ltsh.common.utils.db;
+package org.ltsh.common.util.db;
 
 /**
  * Created by Random on 2017/9/28.

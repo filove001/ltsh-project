@@ -1,4 +1,4 @@
-package org.ltsh.common.utils.db;
+package org.ltsh.common.util.db;
 
 import java.lang.reflect.Method;
 import java.util.Locale;

@@ -2,11 +2,10 @@ package org.ltsh.chat.service.entity;
 
 import lombok.Data;
 import lombok.ToString;
-import org.ltsh.common.utils.db.NoDbColumn;
 
-import java.io.Serializable;
+
 import java.util.Date;
-import java.util.List;
+
 
 /**
  * 消息记录
@@ -29,7 +28,10 @@ public class MessageInfo extends BaseEntity {
      * 消息类型
      */
     private Integer msgType;
-
+    /**
+     * 发送人
+     */
+    private Integer sendUser;
     /**
      * 接受人
      */
@@ -52,10 +54,5 @@ public class MessageInfo extends BaseEntity {
      * 状态
      */
     private String status;
-    /**
-     * 图片List
-     */
-    @NoDbColumn
-    private List<String> imageList;
 
 }

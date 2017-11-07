@@ -1,7 +1,6 @@
 package org.ltsh.chat.service.impl;
 
 
-import org.beetl.sql.test.UserDao;
 import org.ltsh.chat.service.api.MessageService;
 import org.ltsh.chat.service.dao.MessageDao;
 import org.ltsh.chat.service.dao.UserInfoDao;
@@ -14,10 +13,11 @@ import org.ltsh.chat.service.resp.MessageGetServiceResp;
 import org.ltsh.chat.service.resp.Result;
 import org.ltsh.chat.service.enums.ResultCodeEnum;
 import org.ltsh.common.client.activemq.ActiveMQUtils;
-import org.ltsh.common.utils.JsonUtil;
-import org.ltsh.common.utils.LogUtils;
+import org.ltsh.common.utils.BeanUtils;
 
-import org.springframework.beans.BeanUtils;
+
+import org.ltsh.common.util.JsonUtil;
+import org.ltsh.common.util.LogUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,6 +42,7 @@ public class MessageServiceImpl implements MessageService {
         BeanUtils.copyProperties(req, entity);
         entity.setCreateTime(new Date());
         entity.setCreateBy(req.getUserToken().getId());
+        entity.setSendUser(req.getUserToken().getId());
         entity.setStatus(StatusEnums.FSZ.getValue());
         messageDao.insert(entity);
         try {
@@ -62,11 +63,13 @@ public class MessageServiceImpl implements MessageService {
             if(messageInfo != null) {
                 resp = new MessageGetServiceResp();
                 LogUtils.info("获取消息内容为:{}", JsonUtil.toJson(messageInfo));
-                BeanUtils.copyProperties(messageInfo, resp);
+                BeanUtils.copyProperties(messageInfo, resp, new String[]{""});
                 UserInfo createUser = userInfoDao.getSQLManager().unique(UserInfo.class, messageInfo.getCreateBy());
                 UserInfo toUser = userInfoDao.getSQLManager().unique(UserInfo.class, messageInfo.getToUser());
                 resp.setCreateByName(createUser.getName());
                 resp.setToUserName(toUser.getName());
+                messageInfo.setStatus(StatusEnums.YFS.getValue());
+                messageDao.updateById(messageInfo);
             }
             return new Result<MessageGetServiceResp>(resp);
         } catch (Exception e) {

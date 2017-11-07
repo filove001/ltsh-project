@@ -5,7 +5,7 @@ package org.ltsh.common.client.redis;
 
 
 import org.ltsh.common.client.spring.SpringContextUtils;
-import org.ltsh.common.utils.JsonUtil;
+import org.ltsh.common.util.JsonUtil;
 import redis.clients.jedis.ShardedJedis;
 import redis.clients.jedis.ShardedJedisPool;
 

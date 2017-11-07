@@ -5,9 +5,8 @@ import lombok.Data;
 import org.apache.activemq.ActiveMQConnection;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.commons.lang3.StringUtils;
-
-import org.ltsh.common.utils.JsonUtil;
-import org.ltsh.common.utils.LogUtils;
+import org.ltsh.common.util.JsonUtil;
+import org.ltsh.common.util.LogUtils;
 
 
 import javax.jms.*;

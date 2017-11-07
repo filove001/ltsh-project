@@ -12,8 +12,12 @@ import org.ltsh.chat.service.resp.user.RandomStrGetResp;
 import org.ltsh.common.client.redis.RedisKey;
 import org.ltsh.common.client.redis.RedisUtil;
 import org.ltsh.common.entity.UserToken;
-import org.ltsh.common.utils.*;
 
+import org.ltsh.common.util.JsonUtil;
+import org.ltsh.common.util.LogUtils;
+import org.ltsh.common.util.StringUtils;
+import org.ltsh.common.util.security.AES;
+import org.ltsh.common.util.security.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

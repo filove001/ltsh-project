@@ -2,16 +2,15 @@ package org.ltsh.chat.web.utils;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.ltsh.chat.service.enums.ResultCodeEnum;
-import org.ltsh.chat.service.resp.Result;
 import org.ltsh.chat.web.annotation.CheckLogin;
 import org.ltsh.chat.web.enums.CheckLoginType;
 import org.ltsh.chat.web.req.AppContext;
 import org.ltsh.common.client.redis.RedisKey;
 import org.ltsh.common.client.redis.RedisUtil;
 import org.ltsh.common.entity.UserToken;
-import org.ltsh.common.utils.JsonUtil;
-import org.ltsh.common.utils.StringUtils;
+import org.ltsh.common.util.JsonUtil;
+import org.ltsh.common.util.StringUtils;
+
 
 import java.lang.reflect.Method;
 

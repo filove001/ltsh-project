@@ -1,4 +1,4 @@
-package org.ltsh.common.utils;
+package org.ltsh.common.util;
 
 import java.util.Random;
 import java.util.UUID;

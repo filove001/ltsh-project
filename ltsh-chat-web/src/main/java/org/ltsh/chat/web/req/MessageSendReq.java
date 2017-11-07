@@ -29,11 +29,11 @@ public class MessageSendReq extends AppContext {
     /**
      * 发送人
      */
-    private Integer formUser;
+    private Integer sendUser;
     /**
      * 发送人姓名
      */
-    private String formUserName;
+    private String sendUserName;
     /**
      * 接受人
      */

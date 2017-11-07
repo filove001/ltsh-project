@@ -1,4 +1,4 @@
-package org.ltsh.common.utils;
+package org.ltsh.common.util.security;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;

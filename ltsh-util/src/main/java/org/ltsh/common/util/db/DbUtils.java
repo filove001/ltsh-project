@@ -1,9 +1,12 @@
-package org.ltsh.common.utils.db;
+package org.ltsh.common.util.db;
 
 
+
+import org.ltsh.common.util.LogUtils;
+import org.ltsh.common.util.Names;
+import org.ltsh.common.util.bean.FieldUtils;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -11,10 +14,17 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+
 /**
  * Created by Random on 2017/9/27.
  */
 public class DbUtils {
+
+    public static void getTableInfo() {
+        String str = "select * from sqlite_master where type='table';";
+//        dbHelper.getWritableDatabase().query("sqlite_master",  "*", null, null, null, null, null);
+    }
+
 
     public static String[] getColumns(Class classT) {
         return getColumns(getDbColumns(classT));
@@ -28,9 +38,9 @@ public class DbUtils {
     }
     public static Object[] getValues(Object object) {
         List<Object> list = new ArrayList<>();
-        Field[] declaredFields = object.getClass().getDeclaredFields();
+        List<Field> declaredFields = FieldUtils.getFieldList(object.getClass());
         for (Field field:declaredFields) {
-            if(field.getName().toLowerCase().equals("id") || field.getAnnotation(NoDbColumn.class) != null) {
+            if(field.getName().toUpperCase().equals("ID") || field.getAnnotation(NoDbColumn.class) != null) {
                 continue;
             }
             try {
@@ -38,8 +48,7 @@ public class DbUtils {
                 Object o = propertyMethod.getReadMethod().invoke(object);
                 list.add(o);
             } catch (Exception e) {
-                e.printStackTrace();
-//                LogUtils.e(DbUtils.class.getName(),e.getMessage(), e);
+                LogUtils.error(e.getMessage(), e);
             }
         }
         return list.toArray();
@@ -86,15 +95,16 @@ public class DbUtils {
     }
     public static String getTableName(Class classT) {
         String name = classT.getSimpleName();
-        return getColumnName(name, 1).toLowerCase();
+        return getColumnName(name);
     }
 
     public static List<DbColumn> getDbColumns(Class classT) {
-        Field[] fields = classT.getDeclaredFields();
+        List<Field> fieldList = FieldUtils.getFieldList(classT);
+
         String tableName = getTableName(classT);
         List<DbColumn> columns = new ArrayList<>();
-        for (int i = 0; i < fields.length; i++) {
-            Field field = fields[i];
+        for (int i = 0; i < fieldList.size(); i++) {
+            Field field = fieldList.get(i);
             String name = field.getName();
 
             NoDbColumn annotation = field.getAnnotation(NoDbColumn.class);
@@ -102,7 +112,7 @@ public class DbUtils {
                 continue;
             }
             Class<?> declaringClass = field.getType();
-            DbColumn dbColumn = new DbColumn(getColumnName(name, 0), getDbType(declaringClass), tableName, false);
+            DbColumn dbColumn = new DbColumn(getColumnName(name), getDbType(declaringClass), tableName, false);
             if(name.toLowerCase().equals("id")) {
                 dbColumn.setPk(true);
             }
@@ -118,16 +128,17 @@ public class DbUtils {
     }
 
 
-    public static String getColumnName(String filedName, int skip) {
-        StringBuffer stringBuffer = new StringBuffer(filedName);
-        for (int j = skip; j < stringBuffer.length(); j++) {
-            String substring = stringBuffer.substring(j, j + 1);
-            if(substring.equals(substring.toUpperCase())) {
-                stringBuffer.replace(j, j+1,"_" + substring.toLowerCase());
-//                    System.out.println(stringBuffer.substring(i,i+1));
-            }
-        }
-        return stringBuffer.toString();
+    public static String getColumnName(String filedName) {
+        return Names.toUnderlineName(filedName).toUpperCase();
+//        StringBuffer stringBuffer = new StringBuffer(filedName);
+//        for (int j = skip; j < stringBuffer.length(); j++) {
+//            String substring = stringBuffer.substring(j, j + 1);
+//            if(substring.equals(substring.toUpperCase())) {
+//                stringBuffer.replace(j, j+1,"_" + substring.toLowerCase());
+////                    System.out.println(stringBuffer.substring(i,i+1));
+//            }
+//        }
+//        return stringBuffer.toString().toUpperCase();
     }
 
     public static String getDbType(Type toType) {
@@ -154,7 +165,7 @@ public class DbUtils {
             result = "FLOAT";
         } else if(toType == String.class) {
             result = "VARCHAR(50)";
-        }else if(toType == Date.class) {
+        } else if(toType == Date.class) {
             result = "DATETIME";
         } else {
             throw new RuntimeException("Don't know about " + toType);
@@ -162,39 +173,5 @@ public class DbUtils {
         return result;
     }
 
-    public static void setValue(Class toType, Method method, Object obj, Object value) {
-
-        try {
-            if(toType.isArray() && value != null && value.getClass().isArray()) {
-                method.invoke(obj, value);
-            }else if(toType == Integer.class || toType == Integer.TYPE) {
-                method.invoke(obj, (Integer)value);
-            } else if(toType == Double.class || toType == Double.TYPE) {
-                method.invoke(obj, ((Number)value).doubleValue());
-            } else if(toType == Boolean.class || toType == Boolean.TYPE) {
-                method.invoke(obj, ((Number)value).intValue() == 0 ? false : true);
-            } else if(toType == Byte.class || toType == Byte.TYPE) {
-                method.invoke(obj, ((Number)value).byteValue());
-            } else if(toType == Character.class || toType == Character.TYPE) {
-                method.invoke(obj, ((String)value));
-            } else if(toType == Short.class || toType == Short.TYPE) {
-                method.invoke(obj, ((Number)value).shortValue());
-            } else if(toType == Long.class || toType == Long.TYPE) {
-                method.invoke(obj, ((Number)value).longValue());
-            } else if(toType == Float.class || toType == Float.TYPE) {
-                method.invoke(obj, ((Number)value).floatValue());
-            } else if(toType == BigInteger.class) {
-                throw new RuntimeException("Don't know about " + toType);
-            } else if(toType == BigDecimal.class) {
-                method.invoke(obj, new BigDecimal(value + ""));
-            } else if(toType == String.class) {
-                method.invoke(obj, ((String)value));
-            } else {
-                throw new RuntimeException("Don't know about " + toType);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 }
 

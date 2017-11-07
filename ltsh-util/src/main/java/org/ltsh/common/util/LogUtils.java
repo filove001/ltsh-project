@@ -1,4 +1,4 @@
-package org.ltsh.common.utils;
+package org.ltsh.common.util;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

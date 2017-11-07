@@ -1,4 +1,4 @@
-package org.ltsh.common.utils.db;
+package org.ltsh.common.util.db;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

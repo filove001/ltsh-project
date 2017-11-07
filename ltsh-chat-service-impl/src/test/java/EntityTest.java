@@ -1,11 +1,10 @@
 import org.junit.Test;
-import org.ltsh.chat.service.entity.*;
 import org.ltsh.chat.service.req.message.MessageGetServiceReq;
 import org.ltsh.common.entity.UserToken;
-import org.ltsh.common.utils.AesUtils;
-import org.ltsh.common.utils.MD5Util;
-import org.ltsh.common.utils.SignUtils;
-import org.ltsh.common.utils.db.DbUtils;
+
+import org.ltsh.common.util.security.AesUtils;
+import org.ltsh.common.util.security.MD5Util;
+import org.ltsh.common.util.security.SignUtils;
 import org.springframework.beans.BeanUtils;
 
 /**

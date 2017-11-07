@@ -25,8 +25,10 @@
         <joda-time.version>2.9.9</joda-time.version>
         <dubbo.version>2.5.5</dubbo.version>
         <fastjson.version>1.2.39</fastjson.version>
+        <ltsh.util.version>1.0-SNAPSHOT</ltsh.util.version>
     </properties>
     <modules>
+        <module>../ltsh-util</module>
         <module>../ltsh-common</module>
         <module>../ltsh-common-client</module>
         <module>../ltsh-chat-web</module>
@@ -50,6 +52,27 @@
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.ltsh</groupId>
+                <artifactId>ltsh-util</artifactId>
+                <version>${ltsh.util.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.ltsh</groupId>
+                <artifactId>ltsh-common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.ltsh</groupId>
+                <artifactId>ltsh-common-client</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.ltsh</groupId>
+                <artifactId>ltsh-chat-service-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <!-- utils -->
 
             <dependency>
                 <groupId>commons-beanutils</groupId>
@@ -68,22 +91,6 @@
                 <artifactId>zookeeper</artifactId>
                 <version>3.5.2-alpha</version>
             </dependency>
-            <dependency>
-                <groupId>org.ltsh</groupId>
-                <artifactId>ltsh-common</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.ltsh</groupId>
-                <artifactId>ltsh-common-client</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.ltsh</groupId>
-                <artifactId>ltsh-chat-service-api</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <!-- utils -->
             <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-lang3</artifactId>

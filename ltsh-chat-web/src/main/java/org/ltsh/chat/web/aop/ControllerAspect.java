@@ -16,11 +16,12 @@ import org.ltsh.chat.web.req.AppContext;
 import org.ltsh.chat.web.utils.LoginUtils;
 import org.ltsh.common.client.redis.RedisKey;
 import org.ltsh.common.client.redis.RedisUtil;
-import org.ltsh.common.utils.JsonUtil;
-import org.ltsh.common.utils.LogUtils;
-import org.ltsh.common.utils.SignUtils;
-import org.ltsh.common.utils.StringUtils;
 
+
+import org.ltsh.common.util.JsonUtil;
+import org.ltsh.common.util.LogUtils;
+import org.ltsh.common.util.StringUtils;
+import org.ltsh.common.util.security.SignUtils;
 import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 

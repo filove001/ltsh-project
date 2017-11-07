@@ -28,7 +28,7 @@ public class MessageGetServiceResp extends BaseResp {
     /**
      * 创建时间
      */
-    private Date createTime;
+    private String createTime;
     /**
      * 修改用户
      */
@@ -54,7 +54,14 @@ public class MessageGetServiceResp extends BaseResp {
      * 消息类型
      */
     private Integer msgType;
-
+    /**
+     * 发送人
+     */
+    private Integer sendUser;
+    /**
+     * 发送人
+     */
+    private String sendUserName;
     /**
      * 接受人
      */
@@ -70,11 +77,11 @@ public class MessageGetServiceResp extends BaseResp {
     /**
      * 发送时间
      */
-    private Date sendDate;
+    private String sendDate;
     /**
      * 读取时间
      */
-    private Date readTime;
+    private String readTime;
 
     /**
      * 状态

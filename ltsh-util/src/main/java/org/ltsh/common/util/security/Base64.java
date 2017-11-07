@@ -1,5 +1,7 @@
-package org.ltsh.common.utils;
+package org.ltsh.common.util.security;
 
+
+import org.ltsh.common.util.LogUtils;
 
 public final class Base64 {
     static private final int     BASELENGTH           = 128;  

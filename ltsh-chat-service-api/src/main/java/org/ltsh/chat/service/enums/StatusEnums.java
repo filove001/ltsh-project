@@ -11,6 +11,7 @@ public enum StatusEnums {
     SX("SX", "失效"),
     WD("WD", "未读"),
     FSZ("FSZ", "发送中"),
+    YFS("YFS", "已发送"),
     YD("YD", "已读"),
     SB("SB","失败");
 

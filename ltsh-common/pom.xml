@@ -13,6 +13,10 @@
     <artifactId>ltsh-common</artifactId>
     <dependencies>
         <dependency>
+            <groupId>org.ltsh</groupId>
+            <artifactId>ltsh-util</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
         </dependency>

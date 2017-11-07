@@ -30,11 +30,11 @@ public class MessageSendServiceReq extends ToKenContext {
     /**
      * 发送人
      */
-    private String formUser;
+    private String sendUser;
     /**
      * 发送人姓名
      */
-    private String formUserName;
+    private String sendUserName;
     /**
      * 接受人
      */

@@ -1,5 +1,6 @@
 import org.junit.Test;
-import org.ltsh.common.utils.MD5Util;
+import org.ltsh.common.util.security.MD5Util;
+
 
 /**
  * Created by Random on 2017/10/24.
