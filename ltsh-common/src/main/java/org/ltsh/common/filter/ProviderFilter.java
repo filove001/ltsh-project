@@ -5,7 +5,7 @@ import com.alibaba.dubbo.rpc.*;
 import org.ltsh.common.entity.ApiContext;
 
 
-import org.ltsh.common.util.JsonUtil;
+import org.ltsh.common.util.JsonUtils;
 import org.ltsh.common.util.LogUtils;
 import org.slf4j.MDC;
 import org.springframework.util.StringUtils;
@@ -37,7 +37,7 @@ public class ProviderFilter implements Filter{
 						RpcContext.getContext().getRemoteHost(),
 						RpcContext.getContext().getRemotePort() ,
 						invocation.getAttachment("path"),
-						invocation.getMethodName(), JsonUtil.toJsonLogStr(RpcContext.getContext().getArguments(), JsonUtil.getEncryption()));
+						invocation.getMethodName(), JsonUtils.toJsonLogStr(RpcContext.getContext().getArguments(), JsonUtils.getEncryption()));
 				try {
 					Result invoke = invoker.invoke(invocation);
 					Object object = invoke.getValue();
@@ -45,7 +45,7 @@ public class ProviderFilter implements Filter{
 						LogUtils.info("返回参数:null");
 						return invoke;
 					}
-					LogUtils.info("返回参数:{}",JsonUtil.toJsonLogStr(object, JsonUtil.getEncryption()));
+					LogUtils.info("返回参数:{}", JsonUtils.toJsonLogStr(object, JsonUtils.getEncryption()));
 					return invoke;
 				} catch(RpcException e) {
 					LogUtils.error("调用接口异常", e);

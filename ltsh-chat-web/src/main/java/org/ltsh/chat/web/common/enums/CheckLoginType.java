@@ -1,4 +1,4 @@
-package org.ltsh.chat.web.enums;
+package org.ltsh.chat.web.common.enums;
 
 /**
  * Created by Random on 2017/10/11.

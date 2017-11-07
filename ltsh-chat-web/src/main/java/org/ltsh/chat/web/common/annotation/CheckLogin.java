@@ -1,8 +1,8 @@
-package org.ltsh.chat.web.annotation;
+package org.ltsh.chat.web.common.annotation;
 
 
 
-import org.ltsh.chat.web.enums.CheckLoginType;
+import org.ltsh.chat.web.common.enums.CheckLoginType;
 
 import java.lang.annotation.*;
 

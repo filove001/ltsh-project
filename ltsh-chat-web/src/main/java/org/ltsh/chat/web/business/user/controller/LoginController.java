@@ -1,13 +1,13 @@
-package org.ltsh.chat.web.controller;
+package org.ltsh.chat.web.business.user.controller;
 
 import org.ltsh.chat.service.api.UserService;
-import org.ltsh.chat.service.req.message.MessageSendServiceReq;
 import org.ltsh.chat.service.req.user.LoginVerifyServiceReq;
 import org.ltsh.chat.service.req.user.RandomServiceStrGetReq;
 import org.ltsh.chat.service.resp.Result;
 import org.ltsh.chat.service.resp.user.RandomStrGetResp;
-import org.ltsh.chat.web.req.LoginVerifyReq;
-import org.ltsh.chat.web.req.RandomStrGetReq;
+import org.ltsh.chat.web.business.user.req.LoginVerifyReq;
+import org.ltsh.chat.web.business.user.req.RandomStrGetReq;
+import org.ltsh.chat.web.common.controller.BaseController;
 import org.ltsh.common.entity.UserToken;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 @RequestMapping("/chat/login")
-public class LoginController {
+public class LoginController extends BaseController {
     @Autowired
     private UserService userService;
     @ResponseBody

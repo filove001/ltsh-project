@@ -5,7 +5,7 @@ package org.ltsh.common.client.redis;
 
 
 import org.ltsh.common.client.spring.SpringContextUtils;
-import org.ltsh.common.util.JsonUtil;
+import org.ltsh.common.util.JsonUtils;
 import redis.clients.jedis.ShardedJedis;
 import redis.clients.jedis.ShardedJedisPool;
 
@@ -65,7 +65,7 @@ public final class RedisUtil {
     }
     public static final void set(final String key, final Object value, int seconds) {
         try (ShardedJedis shardedJedis = getShardedJedis();) {
-            shardedJedis.set(key, JsonUtil.toJson(value));
+            shardedJedis.set(key, JsonUtils.toJson(value));
             expire(key, seconds, shardedJedis);
         }
     }
@@ -156,7 +156,7 @@ public final class RedisUtil {
      */
     public static final void setCache(final String key, final Object value, Integer seconds) {
         try(ShardedJedis shardedJedis = getShardedJedis();) {
-            shardedJedis.set(key, JsonUtil.toJson(value));
+            shardedJedis.set(key, JsonUtils.toJson(value));
             if(seconds != null) {
                 expire(key, seconds, shardedJedis);
             }

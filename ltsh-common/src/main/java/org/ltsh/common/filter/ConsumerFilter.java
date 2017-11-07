@@ -6,7 +6,7 @@ import com.alibaba.dubbo.rpc.*;
 import org.ltsh.common.entity.ApiContext;
 
 
-import org.ltsh.common.util.JsonUtil;
+import org.ltsh.common.util.JsonUtils;
 import org.ltsh.common.util.LogUtils;
 import org.slf4j.MDC;
 
@@ -35,12 +35,12 @@ public class ConsumerFilter implements Filter {
 				RpcContext.getContext().getRemoteHost(),
 				RpcContext.getContext().getRemotePort() ,
 				invoker.getInterface().getName(),
-				invocation.getMethodName(), JsonUtil.toJsonLogStr(RpcContext.getContext().getArguments(), JsonUtil.getEncryption()));
+				invocation.getMethodName(), JsonUtils.toJsonLogStr(RpcContext.getContext().getArguments(), JsonUtils.getEncryption()));
 		long startTime = Calendar.getInstance().getTimeInMillis();
 		Result invoke = invoker.invoke(invocation);
 		long endTime = Calendar.getInstance().getTimeInMillis();
 		LogUtils.info("执行时间:{} ms",endTime - startTime);
-		LogUtils.info("返回参数:{}",JsonUtil.toJsonLogStr(invoke.getValue(), JsonUtil.getEncryption()));
+		LogUtils.info("返回参数:{}", JsonUtils.toJsonLogStr(invoke.getValue(), JsonUtils.getEncryption()));
 //		try {
 //			MDC.remove("keep");
 //		} catch (Exception e) {

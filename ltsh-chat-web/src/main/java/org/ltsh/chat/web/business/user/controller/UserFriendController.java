@@ -1,16 +1,13 @@
-package org.ltsh.chat.web.controller;
+package org.ltsh.chat.web.business.user.controller;
 
 import org.ltsh.chat.service.api.UserFriendService;
 import org.ltsh.chat.service.req.PageReq;
-import org.ltsh.chat.service.req.message.MessageGetServiceReq;
 import org.ltsh.chat.service.resp.FriendQueryResp;
-import org.ltsh.chat.service.resp.MessageGetServiceResp;
 import org.ltsh.chat.service.resp.PageResult;
 import org.ltsh.chat.service.resp.Result;
-import org.ltsh.chat.web.annotation.CheckLogin;
-import org.ltsh.chat.web.req.AppContext;
-import org.ltsh.chat.web.req.MessageGetReq;
-import org.ltsh.chat.web.req.PageContext;
+import org.ltsh.chat.web.common.annotation.CheckLogin;
+import org.ltsh.chat.web.common.controller.BaseController;
+import org.ltsh.chat.web.common.req.PageContext;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,7 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 @RequestMapping("/chat/friend")
-public class UserFriendController {
+public class UserFriendController extends BaseController {
     @Autowired
     private UserFriendService userFriendService;
     @ResponseBody

@@ -19,7 +19,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>org.ltsh.chat.web.start.StartUp</mainClass>
+                    <mainClass>org.ltsh.chat.web.common.start.StartUp</mainClass>
                 </configuration>
             </plugin>
         </plugins>

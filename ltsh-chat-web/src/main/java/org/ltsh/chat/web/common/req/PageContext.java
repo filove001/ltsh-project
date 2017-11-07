@@ -1,4 +1,4 @@
-package org.ltsh.chat.web.req;
+package org.ltsh.chat.web.common.req;
 
 import lombok.Data;
 

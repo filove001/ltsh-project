@@ -18,9 +18,19 @@ import java.util.Collection;
 public class UserInfo extends BaseEntity {
 	public static final String tableName="user_info";
 	public static final String tableRemarks="用户信息";
-	private Integer id;//主键
+
+	/**
+	 * 登录名
+	 */
 	private String loginName;//登录名
+	/**
+	 * 密码
+	 */
 	private String password;//密码
+	/**
+	 * 昵称
+	 */
+	private String nickName;
 	private String name;//显示名
 	private String tel;//电话号码
 	private String phone;//手机号码
@@ -35,7 +45,7 @@ public class UserInfo extends BaseEntity {
 	private String remarks;//备注
 
 	private java.util.Date lastLoginTime;//最后登录时间 
-	private Byte loginCount;//登录次数
+	private Integer loginCount;//登录次数
 
 
 }

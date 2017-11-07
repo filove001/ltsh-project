@@ -1,14 +1,14 @@
-package org.ltsh.chat.web.utils;
+package org.ltsh.chat.web.common.utils;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.ltsh.chat.web.annotation.CheckLogin;
-import org.ltsh.chat.web.enums.CheckLoginType;
-import org.ltsh.chat.web.req.AppContext;
+import org.ltsh.chat.web.common.annotation.CheckLogin;
+import org.ltsh.chat.web.common.enums.CheckLoginType;
+import org.ltsh.chat.web.common.req.AppContext;
 import org.ltsh.common.client.redis.RedisKey;
 import org.ltsh.common.client.redis.RedisUtil;
 import org.ltsh.common.entity.UserToken;
-import org.ltsh.common.util.JsonUtil;
+import org.ltsh.common.util.JsonUtils;
 import org.ltsh.common.util.StringUtils;
 
 
@@ -31,7 +31,7 @@ public class LoginUtils {
             if(StringUtils.isEmpty(tokenStr)){
                 return false;
             }
-            UserToken userToken = JsonUtil.fromJson(tokenStr, UserToken.class);
+            UserToken userToken = JsonUtils.fromJson(tokenStr, UserToken.class);
             appContext.setUserToken(userToken);
             return true;
         }

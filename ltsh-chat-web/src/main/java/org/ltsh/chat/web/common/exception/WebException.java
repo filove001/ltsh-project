@@ -1,4 +1,4 @@
-package org.ltsh.chat.web.exception;
+package org.ltsh.chat.web.common.exception;
 
 import org.ltsh.chat.service.enums.ResultCodeEnum;
 

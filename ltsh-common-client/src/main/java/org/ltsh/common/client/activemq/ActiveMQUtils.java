@@ -5,7 +5,7 @@ import lombok.Data;
 import org.apache.activemq.ActiveMQConnection;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.commons.lang3.StringUtils;
-import org.ltsh.common.util.JsonUtil;
+import org.ltsh.common.util.JsonUtils;
 import org.ltsh.common.util.LogUtils;
 
 
@@ -66,7 +66,7 @@ public class ActiveMQUtils {
         Queue queue = session.createQueue(getQueueName(formUser));
         MessageProducer producer = session.createProducer(queue);
 //        messageEntity.setSendDate(DateFormatUtils.format(new Date(), "yyyy-MM-dd HH:mm:ss"));
-        TextMessage message = getSession().createTextMessage(JsonUtil.toJson(messageEntity));
+        TextMessage message = getSession().createTextMessage(JsonUtils.toJson(messageEntity));
         producer.send(message);
         session.commit();
     }
@@ -96,7 +96,7 @@ public class ActiveMQUtils {
             if(textMessage != null) {
                 String text = textMessage.getText();
                 if(!StringUtils.isEmpty(text)) {
-                    return JsonUtil.fromJson(text, classT);
+                    return JsonUtils.fromJson(text, classT);
                 }
             }
         } finally {

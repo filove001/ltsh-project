@@ -13,7 +13,7 @@ import java.util.Map;
 /**
  * Created by Random on 2017/4/19.
  */
-public class JsonUtil {
+public class JsonUtils {
 //    private static Gson gson = new GsonBuilder()
 //                    .setLenient()// json宽松
 //                    .enableComplexMapKeySerialization()//支持Map的key为复杂对象的形式
@@ -66,7 +66,7 @@ public class JsonUtil {
      */
     public static String toJsonLogStr(Object[] objects, String [] encryptions) {
         String replaceStr = "******";
-        List list =JsonUtil.fromJson(JsonUtil.toJson(objects), List.class);
+        List list = JsonUtils.fromJson(JsonUtils.toJson(objects), List.class);
 //        List list = JsonUtil.fromJson(JsonUtil.toJson(objects), List.class);
         for (int i = 0; i < list.size(); i++) {
             if(encryptions != null) {
@@ -90,7 +90,7 @@ public class JsonUtil {
                 list.set(i, replaceStr);
             }
         }
-        return JsonUtil.toJson(list);
+        return JsonUtils.toJson(list);
     }
     public static void recursive(Map map, int level){
         for (Object obj : map.keySet()) {

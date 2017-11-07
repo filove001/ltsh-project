@@ -25,21 +25,21 @@
         <!--</property>-->
     <!--</bean>-->
 
-    <context:component-scan base-package="org.ltsh.chat.web.controller"/>
-    <context:component-scan base-package="org.ltsh.chat.web.aop"/>
+    <context:component-scan base-package="org.ltsh.chat.web.business.*.controller"/>
+    <context:component-scan base-package="org.ltsh.chat.web.common.aop"/>
     <!--<aop:aspectj-autoproxy/>-->
 
     <aop:config>
         <aop:aspect id="controllerAspect" ref="aspectBean">
             <!--配置com.spring.service包下所有类或接口的所有方法-->
-            <aop:pointcut id="businessService" expression="execution(* org.ltsh.chat.web.controller.*.*(..))" />
+            <aop:pointcut id="businessService" expression="execution(* org.ltsh.chat.web.business.*.controller.*.*(..))" />
             <aop:before pointcut-ref="businessService" method="doBefore"/>
             <aop:after pointcut-ref="businessService" method="doAfter"/>
             <aop:around pointcut-ref="businessService" method="doAround"/>
             <aop:after-throwing pointcut-ref="businessService" method="doAfterThrow" throwing="ex"/>
         </aop:aspect>
     </aop:config>
-    <bean id="aspectBean" class="org.ltsh.chat.web.aop.ControllerAspect" />
+    <bean id="aspectBean" class="org.ltsh.chat.web.common.aop.ControllerAspect" />
 
 
     <import resource="classpath:spring/dubbo-consumer.xml"/>

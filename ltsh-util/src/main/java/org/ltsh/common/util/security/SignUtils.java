@@ -1,7 +1,7 @@
 package org.ltsh.common.util.security;
 
 
-import org.ltsh.common.util.JsonUtil;
+import org.ltsh.common.util.JsonUtils;
 
 import java.util.Arrays;
 import java.util.Map;
@@ -12,7 +12,7 @@ import java.util.Set;
  */
 public class SignUtils {
     public static String getSignStr(Object params) {
-        Map map = JsonUtil.fromJson(JsonUtil.toJson(params), Map.class);
+        Map map = JsonUtils.fromJson(JsonUtils.toJson(params), Map.class);
         Set<Object> strings = map.keySet();
         String[] paramsStrs = new String[strings.size()];
         strings.toArray(paramsStrs);

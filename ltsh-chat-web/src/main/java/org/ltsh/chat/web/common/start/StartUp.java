@@ -1,4 +1,4 @@
-package org.ltsh.chat.web.start;
+package org.ltsh.chat.web.common.start;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;

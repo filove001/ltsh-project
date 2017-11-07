@@ -16,7 +16,7 @@ import org.ltsh.common.client.activemq.ActiveMQUtils;
 import org.ltsh.common.utils.BeanUtils;
 
 
-import org.ltsh.common.util.JsonUtil;
+import org.ltsh.common.util.JsonUtils;
 import org.ltsh.common.util.LogUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,7 +46,7 @@ public class MessageServiceImpl implements MessageService {
         entity.setStatus(StatusEnums.FSZ.getValue());
         messageDao.insert(entity);
         try {
-            LogUtils.info("发送消息内容为:{}", JsonUtil.toJson(entity));
+            LogUtils.info("发送消息内容为:{}", JsonUtils.toJson(entity));
             activeMQUtils.sendMessage(entity.getToUser() + "",entity);
             return new Result();
         } catch (Exception e) {
@@ -62,7 +62,7 @@ public class MessageServiceImpl implements MessageService {
             MessageGetServiceResp resp = null;
             if(messageInfo != null) {
                 resp = new MessageGetServiceResp();
-                LogUtils.info("获取消息内容为:{}", JsonUtil.toJson(messageInfo));
+                LogUtils.info("获取消息内容为:{}", JsonUtils.toJson(messageInfo));
                 BeanUtils.copyProperties(messageInfo, resp, new String[]{""});
                 UserInfo createUser = userInfoDao.getSQLManager().unique(UserInfo.class, messageInfo.getCreateBy());
                 UserInfo toUser = userInfoDao.getSQLManager().unique(UserInfo.class, messageInfo.getToUser());

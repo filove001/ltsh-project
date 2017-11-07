@@ -1,6 +1,7 @@
-package org.ltsh.chat.web.req;
+package org.ltsh.chat.web.business.user.req;
 
 import lombok.Data;
+import org.ltsh.chat.web.common.req.AppContext;
 
 /**
  * Created by Random on 2017/10/11.

@@ -1,4 +1,4 @@
-package org.ltsh.chat.web.aop;
+package org.ltsh.chat.web.common.aop;
 
 
 
@@ -11,14 +11,14 @@ import org.joda.time.Duration;
 
 import org.ltsh.chat.service.enums.ResultCodeEnum;
 import org.ltsh.chat.service.resp.Result;
-import org.ltsh.chat.web.exception.WebException;
-import org.ltsh.chat.web.req.AppContext;
-import org.ltsh.chat.web.utils.LoginUtils;
+import org.ltsh.chat.web.common.exception.WebException;
+import org.ltsh.chat.web.common.req.AppContext;
+import org.ltsh.chat.web.common.utils.LoginUtils;
 import org.ltsh.common.client.redis.RedisKey;
 import org.ltsh.common.client.redis.RedisUtil;
 
 
-import org.ltsh.common.util.JsonUtil;
+import org.ltsh.common.util.JsonUtils;
 import org.ltsh.common.util.LogUtils;
 import org.ltsh.common.util.StringUtils;
 import org.ltsh.common.util.security.SignUtils;
@@ -122,7 +122,7 @@ public class ControllerAspect {
             LogUtils.info("请求方法:{}.{},请求参数:{}",
                     pjp.getTarget().getClass().getName(),
                     pjp.getSignature().getName(),
-                    JsonUtil.toJsonLogStr(list, JsonUtil.getEncryption()));
+                    JsonUtils.toJsonLogStr(list, JsonUtils.getEncryption()));
 
             Set<ConstraintViolation<Object>> validate = validator.validate(signObj);
             Iterator<ConstraintViolation<Object>> iterator = validate.iterator();
@@ -160,7 +160,7 @@ public class ControllerAspect {
 
             DateTime begin = new DateTime();
             Object object = pjp.proceed();//执行该方法
-            LogUtils.info("返回参数:{}", JsonUtil.toJsonLogStr(object, JsonUtil.getEncryption()));
+            LogUtils.info("返回参数:{}", JsonUtils.toJsonLogStr(object, JsonUtils.getEncryption()));
             DateTime end = new DateTime();
             //计算区间毫秒数
             Duration d = new Duration(begin, end);
@@ -171,7 +171,7 @@ public class ControllerAspect {
             if(e instanceof WebException) {
                 WebException e1 = (WebException) e;
                 Result<Object> result = new Result<>(e1.getCode(), e1.getMessage());
-                LogUtils.info("返回参数:{}", JsonUtil.toJsonLogStr(result, JsonUtil.getEncryption()));
+                LogUtils.info("返回参数:{}", JsonUtils.toJsonLogStr(result, JsonUtils.getEncryption()));
                 return result;
             }
             throw e;

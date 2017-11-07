@@ -1,5 +1,6 @@
 package org.ltsh.chat.service.api;
 
+import org.ltsh.chat.service.req.user.UserRegisterServiceReq;
 import org.ltsh.chat.service.resp.Result;
 import org.ltsh.chat.service.req.user.LoginQueryServiceReq;
 import org.ltsh.chat.service.req.user.LoginVerifyServiceReq;
@@ -11,6 +12,12 @@ import org.ltsh.common.entity.UserToken;
  * Created by Random on 2017/10/10.
  */
 public interface UserService {
+    /**
+     * 注册
+     * @param req
+     * @return
+     */
+    public Result register(UserRegisterServiceReq req);
     /**
      * 登录查询
      * @return

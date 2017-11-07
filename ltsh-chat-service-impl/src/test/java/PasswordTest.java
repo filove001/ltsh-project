@@ -1,4 +1,5 @@
 import org.junit.Test;
+import org.ltsh.chat.service.utils.PasswordUtils;
 import org.ltsh.common.util.security.MD5Util;
 
 
@@ -8,7 +9,9 @@ import org.ltsh.common.util.security.MD5Util;
 public class PasswordTest {
     @Test
     public void password() {
-        String encoder = MD5Util.encoder("chat:" + "111111");
+        String encoder1 = MD5Util.encoder("ltshUser:" + "111111");
+        System.out.println(PasswordUtils.createPassword(encoder1));
+        String encoder = MD5Util.encoder("chat:" + MD5Util.encoder("ltshUser:"+"111111"));
         System.out.println(encoder);
 //        MD5Util.encoder("ltshChat:" + MD5Util.encoder("chat:"+password.toString()) + content[1])
     }
