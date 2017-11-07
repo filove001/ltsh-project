@@ -17,8 +17,8 @@
 
 	<!-- 暴露用户服务  服务代码30884 端口30884  dubbo方式-->
 	<dubbo:protocol name="dubbo" port="30999" />
-	<!--<dubbo:provider filter="providerFilter" retries="0" />-->
-	<dubbo:provider retries="0" />
+	<dubbo:provider filter="providerFilter" retries="0" />
+	<!--<dubbo:provider retries="0" />-->
 
 	<dubbo:service interface="org.ltsh.chat.service.api.MessageService" ref="messageServiceImpl" />
 	<dubbo:service interface="org.ltsh.chat.service.api.UserService" ref="userServiceImpl" />
