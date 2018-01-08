@@ -19,31 +19,28 @@
         <!--<property name="ignoreUnresolvablePlaceholders" value="true"/>-->
         <!--<property name="locations">-->
             <!--<list>-->
-                <!--<value>classpath:jdbc.properties</value>-->
-                <!--<value>classpath:common.properties</value>-->
+                <!--<value>classpath*:service.properties</value>-->
             <!--</list>-->
         <!--</property>-->
     <!--</bean>-->
-
-    <context:component-scan base-package="org.ltsh.chat.web.business.*.controller"/>
-    <context:component-scan base-package="org.ltsh.chat.web.common.aop"/>
+    <context:component-scan base-package="com.ltsh.chat.web.business.*.controller"/>
+    <context:component-scan base-package="com.ltsh.chat.web.common.aop"/>
     <!--<aop:aspectj-autoproxy/>-->
 
     <aop:config>
         <aop:aspect id="controllerAspect" ref="aspectBean">
             <!--配置com.spring.service包下所有类或接口的所有方法-->
-            <aop:pointcut id="businessService" expression="execution(* org.ltsh.chat.web.business.*.controller.*.*(..))" />
+            <aop:pointcut id="businessService" expression="execution(* com.ltsh.chat.web.business.*.controller.*.*(..))" />
             <aop:before pointcut-ref="businessService" method="doBefore"/>
             <aop:after pointcut-ref="businessService" method="doAfter"/>
             <aop:around pointcut-ref="businessService" method="doAround"/>
             <aop:after-throwing pointcut-ref="businessService" method="doAfterThrow" throwing="ex"/>
         </aop:aspect>
     </aop:config>
-    <bean id="aspectBean" class="org.ltsh.chat.web.common.aop.ControllerAspect" />
+    <bean id="aspectBean" class="com.ltsh.chat.web.common.aop.ControllerAspect" />
+    <bean id="springContextUtils" class="com.ltsh.common.client.spring.SpringContextUtils"></bean>
 
-
-    <import resource="classpath:spring/dubbo-consumer.xml"/>
-
-    <import resource="classpath:spring/spring-client-redis.xml"/>
+    <import resource="classpath:spring/spring-service.xml" />
+    <import resource="classpath:spring/spring-client-all.xml" />
 
 </beans>

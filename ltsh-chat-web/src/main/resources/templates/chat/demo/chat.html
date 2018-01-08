@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>云签平台第三方租户系统范例首页</title>
+    <script src="/js/jquery-1.7.2.js" type="text/javascript"></script>
+    <script src="/js/jbase64.js" type="text/javascript"></script>
+    <style type="text/css">
+        label{
+            width:200px;
+            display:inline-block;
+        }
+    </style>
+    <script type="text/javascript">
+        $(function(){
+            $("#submitBtn").click(function () {
+                var postData = {};
+                var data = {};
+                data["phoneNo"]=$("#phoneNo").val();
+                data["pageNo"] = $("#pageNo").val();
+                data["pageSize"] = $("#pageSize").val();
+                //$("#token").val(BASE64.encoder($("#token").val()));
+                postData["token"] = $("#token").val();
+                postData["data"] = BASE64.encoder(JSON.stringify(data));
+                $.ajax({
+                    url:"/chat/message/sendMessage",
+                    type:"POST",
+                    dataType:"json",
+                    contentType:"application/json",
+                    data:JSON.stringify(postData),
+                    success:function(_res){
+                        alert(JSON.stringify(_res));
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+
+<form id="myForm" th:action="@{/api/v1/person/getPerson}" enctype="application/json" method="POST">
+    <div><h3>获取用户信息</h3> </div>
+    <label>pageNo</label>
+    <input type="text" name="pageNo" id="pageNo" /> <br />
+    <label>pageSize</label>
+    <input type="text" name="pageSize" id="pageSize" /> <br />
+    <label>token:</label>
+    <input type="text" name="token" id="token" /><br/>
+    <input type="hidden" id="data" name="data" />
+    <button type="button" id="submitBtn" >提交</button>
+</form>
+<div id="result">
+    <dl>
+        <dt>test</dt>
+        <dd>111</dd>
+    </dl>
+</div>
+</body>
+</html>

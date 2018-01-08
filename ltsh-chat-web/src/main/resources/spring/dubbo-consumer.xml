@@ -20,7 +20,7 @@
 	<dubbo:consumer retries="0" filter="consumerFilter" check="false" timeout="70000"/>
 
 
-	<dubbo:reference id="messageService" interface="org.ltsh.chat.service.api.MessageService" />
-	<dubbo:reference id="userService" interface="org.ltsh.chat.service.api.UserService" />
-	<dubbo:reference id="userFriendService" interface="org.ltsh.chat.service.api.UserFriendService"/>
+	<dubbo:reference id="messageService" interface="com.ltsh.chat.service.api.MessageService" />
+	<dubbo:reference id="userService" interface="com.ltsh.chat.service.api.UserService" />
+	<dubbo:reference id="userFriendService" interface="com.ltsh.chat.service.api.UserFriendService"/>
 </beans>

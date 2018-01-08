@@ -24,16 +24,16 @@
         <mysql.version>6.0.6</mysql.version>
         <joda-time.version>2.9.9</joda-time.version>
         <dubbo.version>2.5.5</dubbo.version>
-        <fastjson.version>1.2.39</fastjson.version>
+        <fastjson.version>1.2.40</fastjson.version>
         <ltsh.util.version>1.0-SNAPSHOT</ltsh.util.version>
+        <okhttp3.version>3.9.1</okhttp3.version>
     </properties>
     <modules>
         <module>../ltsh-util</module>
         <module>../ltsh-common</module>
         <module>../ltsh-common-client</module>
         <module>../ltsh-chat-web</module>
-        <module>../ltsh-chat-service-api</module>
-        <module>../ltsh-chat-service-impl</module>
+        <module>../ltsh-chat-web-demo</module>
     </modules>
     <build>
         <plugins>
@@ -67,13 +67,12 @@
                 <artifactId>ltsh-common-client</artifactId>
                 <version>${project.version}</version>
             </dependency>
-            <dependency>
-                <groupId>org.ltsh</groupId>
-                <artifactId>ltsh-chat-service-api</artifactId>
-                <version>${project.version}</version>
-            </dependency>
             <!-- utils -->
-
+            <dependency>
+                <groupId>com.squareup.okhttp3</groupId>
+                <artifactId>okhttp</artifactId>
+                <version>${okhttp3.version}</version>
+            </dependency>
             <dependency>
                 <groupId>commons-beanutils</groupId>
                 <artifactId>commons-beanutils</artifactId>
@@ -168,6 +167,16 @@
                 <groupId>com.alibaba</groupId>
                 <artifactId>dubbo</artifactId>
                 <version>${dubbo.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-validator</artifactId>
+                <version>5.4.1.Final</version>
+            </dependency>
+            <dependency>
+                <groupId>com.ibeetl</groupId>
+                <artifactId>beetlsql</artifactId>
+                <version>2.9.5</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

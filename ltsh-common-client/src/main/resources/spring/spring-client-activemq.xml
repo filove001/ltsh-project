@@ -4,11 +4,11 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean class="org.ltsh.common.client.activemq.ActiveMQUtils">
-        <property name="acknowledgeMode" value="1"/>
-        <property name="brokeUrl" value="tcp://localhost:61616"/>
-        <property name="password" value=""/>
-        <property name="userName" value=""/>
+    <bean class="com.ltsh.common.client.activemq.ActiveMQUtils">
+        <property name="acknowledgeMode" value="${activemq.acknowledgeMode}"/>
+        <property name="brokeUrl" value="${activemq.brokeUrl}"/>
+        <property name="password" value="${activemq.password}"/>
+        <property name="userName" value="${activemq.userName}"/>
     </bean>
 
 </beans>

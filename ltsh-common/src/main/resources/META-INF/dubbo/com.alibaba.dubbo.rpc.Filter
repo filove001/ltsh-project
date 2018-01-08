@@ -1,2 +1,2 @@
-providerFilter=org.ltsh.common.filter.ProviderFilter
-consumerFilter=org.ltsh.common.filter.ConsumerFilter
+providerFilter=com.ltsh.common.filter.ApiFilter
+consumerFilter=com.ltsh.common.filter.ApiFilter
