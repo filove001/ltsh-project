@@ -22,7 +22,7 @@ import java.util.Map;
  */
 @Controller
 public class DemoController extends BaseController {
-    String baseUrl = "http://127.0.0.1:8013";
+    String baseUrl = "http://111.230.246.124:8013";
     @RequestMapping({"/", "index.html"})
     public String index(HttpServletRequest request){
         return "/index";

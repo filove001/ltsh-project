@@ -27,9 +27,9 @@
                             <mainClass>com.ltsh.chat.web.start.StartUp</mainClass>
                         </manifest>
                     </archive>
-                    <excludes>
-                        <exclude>*.properties</exclude>
-                    </excludes>
+                    <!--<excludes>-->
+                        <!--<exclude>*.properties</exclude>-->
+                    <!--</excludes>-->
                 </configuration>
                 <executions>
                     <execution>
@@ -62,10 +62,10 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
+            <!--<plugin>-->
+                <!--<groupId>org.springframework.boot</groupId>-->
+                <!--<artifactId>spring-boot-maven-plugin</artifactId>-->
+            <!--</plugin>-->
         </plugins>
 
     </build>

@@ -1,6 +1,7 @@
 package com.ltsh.chat.service.impl;
 
 import com.ltsh.chat.service.api.UserService;
+import com.ltsh.chat.service.config.GlobalConfig;
 import com.ltsh.chat.service.dao.UserInfoDao;
 import com.ltsh.chat.service.enums.ResultCodeEnum;
 import com.ltsh.chat.service.req.user.LoginQueryServiceReq;
@@ -34,7 +35,8 @@ public class UserServiceImpl extends BaseServiceImpl<UserInfo> implements UserSe
 
     @Autowired
     private UserInfoDao userInfoDao;
-
+    @Autowired
+    private GlobalConfig globalConfig;
 
     /**
      * 注册
@@ -90,8 +92,8 @@ public class UserServiceImpl extends BaseServiceImpl<UserInfo> implements UserSe
         if(token != null) {
             RedisUtil.del(RedisKey.getRedisKey(RedisKey.TOKEN_KEY, token));
         }
-        RedisUtil.set(RedisKey.getRedisKey(RedisKey.TOKEN_KEY, userToken.getLoginName()), userToken.getToken(), 24*60*60);
-        RedisUtil.set(RedisKey.getRedisKey(RedisKey.TOKEN_KEY, userToken.getToken()), userToken, 24*60*60);
+        RedisUtil.set(RedisKey.getRedisKey(RedisKey.TOKEN_KEY, userToken.getLoginName()), userToken.getToken(), globalConfig.getTokenTimes());
+        RedisUtil.set(RedisKey.getRedisKey(RedisKey.TOKEN_KEY, userToken.getToken()), userToken, globalConfig.getTokenTimes());
 
         return new Result<>(userToken);
     }
@@ -104,7 +106,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserInfo> implements UserSe
             randomKey = StringUtils.getRandomString(6);
         }
         String randomValue = StringUtils.getRandomString(8);
-        RedisUtil.set(RedisKey.getRedisKey(RedisKey.RANDOM_KEY, req.getMedium(), randomKey), randomValue, 3*60);
+        RedisUtil.set(RedisKey.getRedisKey(RedisKey.RANDOM_KEY, req.getMedium(), randomKey), randomValue, globalConfig.getRandomTimes());
         RandomStrGetResp resp = new RandomStrGetResp();
         try {
             resp.setRandomKey(AES.encrypt(randomKey, req.getUuid()));
