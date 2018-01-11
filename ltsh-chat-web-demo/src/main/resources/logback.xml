@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
     <property name="SYS_LOG_DIR" value="/www/logs" />
-    <property name="LOG_FILE" value="ltsh-chat-web.log" />
+    <property name="LOG_FILE" value="ltsh-chat-web-demo.log" />
     <property name="fileLayoutPattern"
               value="[%-5p][%date]%X{keep}[%C{1}:%L] %m%n" />
     <property name="consoleLayoutPattern"

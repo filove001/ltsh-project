@@ -5,7 +5,6 @@ import com.ltsh.chat.service.entity.UserFriend;
 import com.ltsh.chat.service.req.PageReq;
 import com.ltsh.chat.web.start.StartUp;
 import com.ltsh.common.entity.UserToken;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

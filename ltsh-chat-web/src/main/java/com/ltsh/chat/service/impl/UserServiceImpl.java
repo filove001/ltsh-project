@@ -35,8 +35,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserInfo> implements UserSe
 
     @Autowired
     private UserInfoDao userInfoDao;
-    @Autowired
-    private GlobalConfig globalConfig;
+
 
     /**
      * 注册
@@ -92,8 +91,8 @@ public class UserServiceImpl extends BaseServiceImpl<UserInfo> implements UserSe
         if(token != null) {
             RedisUtil.del(RedisKey.getRedisKey(RedisKey.TOKEN_KEY, token));
         }
-        RedisUtil.set(RedisKey.getRedisKey(RedisKey.TOKEN_KEY, userToken.getLoginName()), userToken.getToken(), globalConfig.getTokenTimes());
-        RedisUtil.set(RedisKey.getRedisKey(RedisKey.TOKEN_KEY, userToken.getToken()), userToken, globalConfig.getTokenTimes());
+        RedisUtil.set(RedisKey.getRedisKey(RedisKey.TOKEN_KEY, userToken.getLoginName()), userToken.getToken(), GlobalConfig.getInt("tokenTies"));
+        RedisUtil.set(RedisKey.getRedisKey(RedisKey.TOKEN_KEY, userToken.getToken()), userToken, GlobalConfig.getInt("tokenTies"));
 
         return new Result<>(userToken);
     }
@@ -106,7 +105,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserInfo> implements UserSe
             randomKey = StringUtils.getRandomString(6);
         }
         String randomValue = StringUtils.getRandomString(8);
-        RedisUtil.set(RedisKey.getRedisKey(RedisKey.RANDOM_KEY, req.getMedium(), randomKey), randomValue, globalConfig.getRandomTimes());
+        RedisUtil.set(RedisKey.getRedisKey(RedisKey.RANDOM_KEY, req.getMedium(), randomKey), randomValue, GlobalConfig.getInt("randomTimes"));
         RandomStrGetResp resp = new RandomStrGetResp();
         try {
             resp.setRandomKey(AES.encrypt(randomKey, req.getUuid()));
