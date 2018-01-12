@@ -19,54 +19,48 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>2.4</version>
+                <version>2.6</version>
                 <configuration>
                     <archive>
+                        <!-- 添加index则不从mainfest中读取classpath，而是从Index.list中读取 -->
+                        <!--                         <index>true</index> -->
                         <manifest>
-                            <addClasspath>true</addClasspath>
-                            <classpathPrefix>../lib/</classpathPrefix>
                             <mainClass>com.ltsh.chat.web.start.StartUp</mainClass>
+                            <!-- to create a class path to your dependecies you have to fill true
+                                in this field -->
+                            <addClasspath>true</addClasspath>
+                            <classpathPrefix>lib/</classpathPrefix>
+                            <!--<classpathLayoutType>custom</classpathLayoutType> <customClasspathLayout>
+                                lib/$${artifact.groupId}.$${artifact.artifactId}.$${artifact.extension} </customClasspathLayout> -->
                         </manifest>
+                        <manifestEntries>
+                            <Class-Path>./</Class-Path>
+                        </manifestEntries>
                     </archive>
-                    <!--<excludes>-->
-                        <!--<exclude>*.properties</exclude>-->
-                    <!--</excludes>-->
+                    <excludes>
+                        <exclude>config/**</exclude>
+                    </excludes>
                 </configuration>
-                <executions>
-                    <execution>
-                        <id>make-a-jar</id>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
-                <version>2.4.1</version>
+                <configuration>
+                    <!-- not append assembly id in release file name -->
+                    <appendAssemblyId>false</appendAssemblyId>
+                    <descriptors>
+                        <descriptor>src/main/assembly/package.xml</descriptor>
+                    </descriptors>
+                </configuration>
                 <executions>
                     <execution>
-                        <id>make-zip</id>
-                        <!-- 绑定到package生命周期阶段上 -->
+                        <id>make-assembly</id>
                         <phase>package</phase>
                         <goals>
-                            <!-- 绑定到package生命周期阶段上 -->
                             <goal>single</goal>
                         </goals>
-                        <configuration>
-                            <descriptors>
-                                <!--描述文件路径-->
-                                <descriptor>${project.basedir}/src/main/assembly/assembly.xml</descriptor>
-                            </descriptors>
-                        </configuration>
                     </execution>
                 </executions>
             </plugin>
-            <!--<plugin>-->
-                <!--<groupId>org.springframework.boot</groupId>-->
-                <!--<artifactId>spring-boot-maven-plugin</artifactId>-->
-            <!--</plugin>-->
         </plugins>
 
     </build>
@@ -150,9 +144,13 @@
             <groupId>com.ibeetl</groupId>
             <artifactId>beetlsql</artifactId>
         </dependency>
+        <!--<dependency>-->
+            <!--<groupId>mysql</groupId>-->
+            <!--<artifactId>mysql-connector-java</artifactId>-->
+        <!--</dependency>-->
         <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
+            <groupId>org.mariadb.jdbc</groupId>
+            <artifactId>mariadb-java-client</artifactId>
         </dependency>
     </dependencies>
 </project>

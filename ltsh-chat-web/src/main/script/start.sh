@@ -4,7 +4,7 @@ if [ ! -d "/www/pids" ]; then
     mkdir -p /www/pids
 fi
 
-#$1 provider name to start up
+#$1 to start up
 
 
 #kill the existing service first
@@ -16,14 +16,14 @@ if [ -f "/www/pids/"$1".pid" ]; then
 fi
 
 #start up
-if [ ! -d '/www/web/'$1 ]; then
+if [ ! -d '/www/'$1 ]; then
     echo $1" doesn't exist"
     exit 0
 fi
 
 
 cd /www
-nohup java -jar /www/web/$1/bin/$1.jar >/dev/null 2>&1 &
+nohup java -jar /www/$1/bin/$1.jar >/dev/null 2>&1 &
 echo $! > /www/pids/$1.pid
 echo $1' has been started'
 exit 0

@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class UserFriendController extends BaseController {
     @Autowired
     private UserFriendService userFriendService;
+
     @ResponseBody
     @RequestMapping("/page")
     @CheckLogin
@@ -37,11 +38,9 @@ public class UserFriendController extends BaseController {
     @RequestMapping("/add")
     @CheckLogin
     public Result<PageResult<FriendQueryResp>> add(UserFriendAddReq req){
-        UserFriend userFriend = new UserFriend();
-        ToKenContext<UserFriend> toKenContext = new ToKenContext<>();
-        BeanUtils.copyProperties(req, userFriend);
+        ToKenContext<UserFriendAddReq> toKenContext = new ToKenContext<>();
         BeanUtils.copyProperties(req, toKenContext);
-        toKenContext.setContent(userFriend);
-        return userFriendService.insert(toKenContext);
+        toKenContext.setContent(req);
+        return userFriendService.add(toKenContext);
     }
 }

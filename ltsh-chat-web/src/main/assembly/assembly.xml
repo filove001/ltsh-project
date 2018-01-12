@@ -19,9 +19,10 @@ http://maven.apache.org/ASSEMBLY/2.0.0 ">
             <outputDirectory>/conf</outputDirectory>
 
             <includes>
-                <!--<include>*.properties</include>-->
-                <!--<include>*.xml</include>-->
-                <!--<include>spring/*</include>-->
+                <include>*.properties</include>
+                <include>*.xml</include>
+                <include>spring/*</include>
+                <include>*.sql</include>
             </includes>
         </fileSet>
         <fileSet>

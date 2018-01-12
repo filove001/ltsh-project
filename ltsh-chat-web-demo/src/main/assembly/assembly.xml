@@ -17,11 +17,12 @@ http://maven.apache.org/ASSEMBLY/2.0.0 ">
         <fileSet>
             <directory>${project.basedir}/src/main/resources</directory>
             <outputDirectory>/conf</outputDirectory>
-
             <includes>
-                <!--<include>*.properties</include>-->
-                <!--<include>*.xml</include>-->
-                <!--<include>spring/*</include>-->
+                <include>*.properties</include>
+                <include>*.xml</include>
+                <include>spring/*</include>
+                <include>templates/*</include>
+                <include>static/*</include>
             </includes>
         </fileSet>
         <fileSet>

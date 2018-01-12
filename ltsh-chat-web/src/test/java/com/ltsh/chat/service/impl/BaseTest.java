@@ -1,6 +1,6 @@
 package com.ltsh.chat.service.impl;
 
-import com.alibaba.dubbo.config.ApplicationConfig;
+
 import org.junit.runner.RunWith;
 import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;

@@ -124,12 +124,10 @@ public class ControllerAspect {
             if(pjp.getSignature().getName().equals("getMessage") || pjp.getSignature().getName().equals("getRandomStr")) {
                 isSkip = true;
             }
-            if(!isSkip) {
-                LogUtils.info("请求方法:{}.{},请求参数:{}",
-                        pjp.getTarget().getClass().getName(),
-                        pjp.getSignature().getName(),
-                        JsonUtils.toJsonLogStr(list, JsonUtils.getEncryption()));
-            }
+            LogUtils.info("请求方法:{}.{},请求参数:{}",
+                    pjp.getTarget().getClass().getName(),
+                    pjp.getSignature().getName(),
+                    JsonUtils.toJsonLogStr(list, JsonUtils.getEncryption()));
 
             if(signObj != null) {
                 Set<ConstraintViolation<Object>> validate = validator.validate(signObj);
