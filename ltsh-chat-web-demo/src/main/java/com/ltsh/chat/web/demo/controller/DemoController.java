@@ -7,6 +7,7 @@ import com.ltsh.common.util.security.AES;
 import com.ltsh.common.util.security.SignUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -23,7 +24,8 @@ import java.util.Map;
 @Controller
 public class DemoController extends BaseController {
     private static Logger logger = LoggerFactory.getLogger(DemoController.class);
-    String baseUrl = "http://111.230.246.124:8013";
+    @Value("chat.service.url ")
+    private String baseUrl;
     @RequestMapping({"/", "index.html"})
     public String index(HttpServletRequest request){
         return "/index";
