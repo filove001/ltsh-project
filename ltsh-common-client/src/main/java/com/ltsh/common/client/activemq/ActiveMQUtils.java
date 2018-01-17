@@ -1,12 +1,12 @@
-package org.ltsh.common.client.activemq;
+package com.ltsh.common.client.activemq;
 
 //import com.google.gson.Gson;
 import lombok.Data;
 import org.apache.activemq.ActiveMQConnection;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.commons.lang3.StringUtils;
-import org.ltsh.common.util.JsonUtils;
-import org.ltsh.common.util.LogUtils;
+import com.ltsh.common.util.JsonUtils;
+import com.ltsh.common.util.LogUtils;
 
 
 import javax.jms.*;
@@ -24,10 +24,10 @@ public class ActiveMQUtils {
     //默认连接密码
     private String password = ActiveMQConnection.DEFAULT_PASSWORD;
     //默认连接地址
-    private String brokeUrl = ActiveMQConnection.DEFAULT_BROKER_URL;
+    private String brokeUrl = "failover:(tcp://192.168.22.214:61616)?randomize=false";
     //
     private int acknowledgeMode = Session.AUTO_ACKNOWLEDGE;
-    private Long pollTime = 5 * 1000L;
+    private Long pollTime = 20 * 1000L;
 //    private Gson gson = new Gson();
 
 
@@ -88,20 +88,32 @@ public class ActiveMQUtils {
                 }
                 queue = session.createQueue(queueName);
                 consumer = session.createConsumer(queue);
+
                 consumerHashMap.put(queueName, consumer);
             }
 
 
             TextMessage textMessage = (TextMessage)consumer.receive(pollTime);
+            session.commit();
             if(textMessage != null) {
                 String text = textMessage.getText();
                 if(!StringUtils.isEmpty(text)) {
                     return JsonUtils.fromJson(text, classT);
                 }
             }
+
         } finally {
-            consumer.close();
-            session.commit();
+            if(consumerHashMap.get(queueName) != null) {
+                consumerHashMap.get(queueName).close();
+                consumerHashMap.remove(queueName);
+            }
+            if(consumer != null) {
+                consumer.close();
+            }
+//            if(session != null) {
+//
+//            }
+
         }
 
 

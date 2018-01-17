@@ -1,11 +1,11 @@
-package org.ltsh.common.client.redis;
+package com.ltsh.common.client.redis;
 
 /**
  * Created by Random on 2017/10/11.
  */
 public class RedisKey {
-    public static final String TOKEN_KEY = "org:ltsh:chat:user:tokenKey:";
-    public static final String RANDOM_KEY = "org:ltsh:chat:user:random:";
+    public static final String TOKEN_KEY = "com.ltsh:chat:user:tokenKey:";
+    public static final String RANDOM_KEY = "com.ltsh:chat:user:random:";
     public static String getRedisKey(String packageName,String ... keys) {
         StringBuffer buffer = new StringBuffer();
         buffer.append(packageName);

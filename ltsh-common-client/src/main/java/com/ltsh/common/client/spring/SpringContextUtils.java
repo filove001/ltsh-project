@@ -1,4 +1,4 @@
-package org.ltsh.common.client.spring;
+package com.ltsh.common.client.spring;
 
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;

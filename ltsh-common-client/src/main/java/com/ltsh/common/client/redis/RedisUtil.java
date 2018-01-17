@@ -1,18 +1,18 @@
-package org.ltsh.common.client.redis;
+package com.ltsh.common.client.redis;
 
 
 
 
 
-import org.ltsh.common.client.spring.SpringContextUtils;
-import org.ltsh.common.util.JsonUtils;
+import com.ltsh.common.client.spring.SpringContextUtils;
+import com.ltsh.common.util.JsonUtils;
 import redis.clients.jedis.ShardedJedis;
 import redis.clients.jedis.ShardedJedisPool;
 
 
 /**
  * Redis缓存辅助类
- * 
+ *
  * @author SameOne
  * @version 2016年4月2日 下午4:17:22
  */
@@ -44,7 +44,7 @@ public final class RedisUtil {
     }
     /**
      * 获取时 自定义重置有效期
-     * 
+     *
      * @param key
      * @param expireSeconds
      * @return
@@ -99,7 +99,7 @@ public final class RedisUtil {
 
     /**
      * 在某段时间后失效
-     * 
+     *
      * @return
      */
     public static final Long expire(final String key, final int seconds, ShardedJedis shardedJedis) {
@@ -118,10 +118,10 @@ public final class RedisUtil {
             return shardedJedis.ttl(key);
         }
     }
-    
+
     /**
      * 自增操作（默认加1）
-     * 
+     *
      * @param key
      * @param expire
      * @return
@@ -133,7 +133,7 @@ public final class RedisUtil {
             return id;
         }
     }
-    
+
     /**
      * 自增操作（默认加1）
      *
@@ -144,7 +144,7 @@ public final class RedisUtil {
             return shardedJedis.incr(key);
         }
     }
-    
+
     // 未完，待续...
 
 
