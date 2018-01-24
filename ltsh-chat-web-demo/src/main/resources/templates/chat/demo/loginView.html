@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="utf-8" />
+
+    <title>index</title>
+    <script th:src="@{/js/jquery-1.7.2.js}"></script>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        $(function(){
+            $('#context').text('');
+            $('#submitBtn').click(function(){
+                $.ajax({
+                    type: "POST",
+                    url: "/chat/demo/loginVerify",
+                    data: $('#messageForm').serialize(),
+                    dataType: "json",
+                    timeoutNumber: 60000,
+//                async: false,
+                    success: function(msg){
+                        $('#context').text(JSON.stringify(msg));
+
+                    },
+                    error:function(){
+                    }
+                });
+
+            });
+//            $('.dropdown-menu a').click(function(){
+//                alert('aaa');
+//                $.get('/nav', {}, function(_data){
+//                    $('#context').html(_data);
+//                    alert(_data);
+//                });
+//            });
+        });
+
+        /*]]>*/
+    </script>
+    <style type="text/css">
+        #context dl{
+            width:400px;
+            -webkit-margin-before: 5px;
+            -webkit-margin-after: 5px;
+            -webkit-margin-start: 0px;
+            -webkit-margin-end: 0px;
+        }
+        #context dl dt{
+            color: #1b809e;
+        }
+        #context dl dd{
+            -webkit-margin-start:5px;
+            marking-left: 5px;
+        }
+    </style>
+</head>
+<body style="">
+    <div style="">
+
+        <form id="messageForm">
+
+            <label>用户名</label>
+            <input type="text" name="loginName" id="loginName" />
+            <br/>
+            <label>密码</label>
+            <input type="password" name="password" id="password" />
+            <br/>
+
+        </form>
+        <input type="button" value="登录" id="submitBtn"/>
+    </div>
+    <div id="context" >
+        <dl>
+            <dt>test</dt>
+            <dd>aaa</dd>
+        </dl>
+    </div>
+</body>
+</html>

@@ -94,7 +94,7 @@
     </build>
     <dependencies>
         <dependency>
-            <groupId>org.ltsh</groupId>
+            <groupId>com.ltsh</groupId>
             <artifactId>ltsh-common</artifactId>
         </dependency>
         <dependency>
@@ -161,7 +161,7 @@
             <artifactId>aspectjweaver</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.ltsh</groupId>
+            <groupId>com.ltsh</groupId>
             <artifactId>ltsh-common-client</artifactId>
         </dependency>
         <dependency>

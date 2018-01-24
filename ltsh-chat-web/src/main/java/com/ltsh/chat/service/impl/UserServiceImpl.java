@@ -54,6 +54,8 @@ public class UserServiceImpl extends BaseServiceImpl<UserInfo> implements UserSe
         userInfo.setCreateBy(0);
         userInfo.setCreateTime(new Date());
         userInfo.setLoginName(req.getLoginName());
+        userInfo.setName(req.getNickName());
+        userInfo.setNickName(req.getNickName());
         userInfo.setPassword(PasswordUtils.createPassword(req.getPassword()));
         userInfo.setStatus(StatusEnums.KY.getValue());
         userInfoDao.insert(userInfo);

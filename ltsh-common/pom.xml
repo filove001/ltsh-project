@@ -13,7 +13,7 @@
     <artifactId>ltsh-common</artifactId>
     <dependencies>
         <dependency>
-            <groupId>org.ltsh</groupId>
+            <groupId>com.ltsh</groupId>
             <artifactId>ltsh-util</artifactId>
         </dependency>
         <dependency>

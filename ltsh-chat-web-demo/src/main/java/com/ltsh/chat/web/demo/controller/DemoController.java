@@ -4,6 +4,7 @@ import com.ltsh.common.util.JsonUtils;
 import com.ltsh.common.util.StringUtils;
 import com.ltsh.common.util.http.OkHttpUtils;
 import com.ltsh.common.util.security.AES;
+import com.ltsh.common.util.security.MD5Util;
 import com.ltsh.common.util.security.SignUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +25,7 @@ import java.util.Map;
 @Controller
 public class DemoController extends BaseController {
     private static Logger logger = LoggerFactory.getLogger(DemoController.class);
-    @Value("chat.service.url ")
+    @Value("${chat.service.url}")
     private String baseUrl;
     @RequestMapping({"/", "index.html"})
     public String index(HttpServletRequest request){
@@ -54,6 +55,23 @@ public class DemoController extends BaseController {
         String[] random = getRandom(request);
         setSignInfo(baseParams, random);
         String post = OkHttpUtils.post(baseUrl + "/chat/message/getMessage", baseParams);
+        return JsonUtils.fromJson(post, Map.class);
+    }
+    private String getPassword(String password, String randomValue) {
+        return MD5Util.encoder("ltshChat:" + MD5Util.encoder("chat:"+MD5Util.encoder("ltshUser:" + password.toString())) + randomValue);
+    }
+    @ResponseBody
+    @RequestMapping("/chat/demo/loginVerify")
+    public Map loginVerify(HttpServletRequest request) {
+        Map<String, Object> baseParams = getBaseParams(request);
+        String[] random = getRandom(request);
+        String[] passwordRandom = getRandom(request);
+        baseParams.put("loginName", request.getParameter("loginName"));
+        String password = request.getParameter("password");
+        baseParams.put("password", getPassword(password, passwordRandom[1]));
+        baseParams.put("passwordRandomStr", passwordRandom[0]);
+        setSignInfo(baseParams, random);
+        String post = OkHttpUtils.post(baseUrl + "/chat/login/loginVerify", baseParams);
         return JsonUtils.fromJson(post, Map.class);
     }
     @ResponseBody

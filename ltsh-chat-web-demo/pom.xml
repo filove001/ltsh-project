@@ -65,7 +65,7 @@
     </build>
     <dependencies>
         <dependency>
-            <groupId>org.ltsh</groupId>
+            <groupId>com.ltsh</groupId>
             <artifactId>ltsh-common</artifactId>
         </dependency>
         <dependency>

@@ -53,17 +53,17 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>org.ltsh</groupId>
+                <groupId>com.ltsh</groupId>
                 <artifactId>ltsh-util</artifactId>
                 <version>${ltsh.util.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.ltsh</groupId>
+                <groupId>com.ltsh</groupId>
                 <artifactId>ltsh-common</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.ltsh</groupId>
+                <groupId>com.ltsh</groupId>
                 <artifactId>ltsh-common-client</artifactId>
                 <version>${project.version}</version>
             </dependency>
