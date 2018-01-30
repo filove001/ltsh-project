@@ -9,7 +9,7 @@ import java.util.List;
  * Created by fengjianbo on 2017/12/28.
  */
 @Data
-public class MessageSendGroupReq extends MessageInfo {
+public class SendGroupMessageReq extends MessageInfo {
     /**
      * 群组id
      */

@@ -3,15 +3,16 @@ package com.ltsh.chat.service.impl;
 import com.ltsh.chat.service.api.BaseService;
 import com.ltsh.chat.service.dao.BaseDao;
 import com.ltsh.chat.service.entity.BaseEntity;
-import com.ltsh.chat.service.entity.UserFriend;
+
 import com.ltsh.chat.service.enums.ResultCodeEnum;
 import com.ltsh.chat.service.req.PageReq;
 import com.ltsh.chat.service.resp.PageResult;
 import com.ltsh.chat.service.resp.Result;
-import com.ltsh.common.entity.ToKenContext;
+import com.ltsh.common.entity.RequestContext;
+
 import org.beetl.sql.core.engine.PageQuery;
 
-import java.util.ArrayList;
+
 import java.util.Date;
 import java.util.List;
 
@@ -21,7 +22,7 @@ import java.util.List;
 public abstract class BaseServiceImpl<T extends BaseEntity> implements BaseService<T> {
     protected BaseDao baseDao;
     @Override
-    public Result insert(ToKenContext<T> req) {
+    public Result insert(RequestContext<T> req) {
         T content = req.getContent();
         content.setCreateTime(new Date());
         content.setCreateBy(req.getUserToken().getId());
@@ -32,12 +33,11 @@ public abstract class BaseServiceImpl<T extends BaseEntity> implements BaseServi
             return result;
         }
 
-
         return new Result(ResultCodeEnum.SUCCESS);
     }
 
     @Override
-    public Result update(ToKenContext<T> req) {
+    public Result update(RequestContext<T> req) {
         T content = req.getContent();
         content.setUpdateTime(new Date());
         content.setUpdateBy(req.getUserToken().getId());
@@ -46,19 +46,19 @@ public abstract class BaseServiceImpl<T extends BaseEntity> implements BaseServi
     }
 
     @Override
-    public Result delete(ToKenContext<T> req) {
+    public Result delete(RequestContext<T> req) {
         baseDao.deleteById(req.getContent().getId());
         return new Result(ResultCodeEnum.SUCCESS);
     }
 
     @Override
-    public Result<T> getById(ToKenContext<T> req) {
+    public Result<T> getById(RequestContext<T> req) {
         Object unique = baseDao.unique(req.getContent().getId());
         return new Result<>((T)unique);
     }
 
     @Override
-    public Result<List<T>> getByTemplate(ToKenContext<T> req) {
+    public Result<List<T>> getByTemplate(RequestContext<T> req) {
         List template = baseDao.template(req.getContent());
         return new Result<>(template);
     }
@@ -68,7 +68,7 @@ public abstract class BaseServiceImpl<T extends BaseEntity> implements BaseServi
      * @param req
      * @return
      */
-    public Result<PageResult<T>> page(PageReq<T> req) {
+    public PageResult<T> page(PageReq<T> req) {
         PageQuery pageQuery = new PageQuery<>();
         pageQuery.setPageNumber(req.getPageNumber());
         pageQuery.setPageSize(req.getPageSize());
@@ -79,7 +79,7 @@ public abstract class BaseServiceImpl<T extends BaseEntity> implements BaseServi
         pageResult.setPageSize(pageQuery.getPageSize());
         pageResult.setTotalRow(pageQuery.getTotalRow());
         pageResult.setResultList(pageQuery.getList());
-        return new Result<>(pageResult);
+        return pageResult;
     }
 
     public Result repetitionVerify(T content) {

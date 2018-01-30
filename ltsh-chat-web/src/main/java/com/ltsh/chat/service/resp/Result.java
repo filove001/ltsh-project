@@ -8,7 +8,8 @@ import lombok.Data;
  * Created by Random on 2017/10/9.
  */
 @Data
-public class Result<T> extends BaseResult<T> {
+public class Result<T> extends BaseResult {
+    private T content;
     public Result(){
         super(ResultCodeEnum.SUCCESS.getCode(), ResultCodeEnum.SUCCESS.getMessage());
     }
@@ -22,7 +23,15 @@ public class Result<T> extends BaseResult<T> {
         super(resultCode.getCode(), String.format(resultCode.getMessage(), message));
     }
     public Result(T content) {
-        super(ResultCodeEnum.SUCCESS.getCode(), ResultCodeEnum.SUCCESS.getMessage(), content);
+        super(ResultCodeEnum.SUCCESS.getCode(), ResultCodeEnum.SUCCESS.getMessage());
+        this.content = content;
     }
 
+    public T getContent() {
+        return content;
+    }
+
+    public void setContent(T content) {
+        this.content = content;
+    }
 }

@@ -39,7 +39,12 @@
         <resources>
             <resource>
                 <targetPath>${project.build.directory}/classes</targetPath>
-                <directory>src/main/resources/config/${env}</directory>
+                <directory>src/main/config/${env}</directory>
+                <filtering>true</filtering>
+            </resource>
+            <resource>
+                <targetPath>${project.build.directory}/classes</targetPath>
+                <directory>src/main/resources/</directory>
                 <filtering>true</filtering>
             </resource>
         </resources>

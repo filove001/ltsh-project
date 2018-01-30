@@ -9,11 +9,10 @@ import com.ltsh.chat.service.entity.UserInfo;
 import com.ltsh.chat.service.enums.ResultCodeEnum;
 import com.ltsh.chat.service.enums.StatusEnums;
 import com.ltsh.chat.service.req.PageReq;
+import com.ltsh.chat.service.req.friend.UserFriendAddReq;
 import com.ltsh.chat.service.resp.PageResult;
 import com.ltsh.chat.service.resp.Result;
-import com.ltsh.chat.web.business.user.req.UserFriendAddReq;
-import com.ltsh.common.entity.ToKenContext;
-import org.beetl.sql.core.engine.PageQuery;
+import com.ltsh.common.entity.RequestContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,7 +35,7 @@ public class UserFriendServiceImpl extends BaseServiceImpl<UserFriend> implement
     }
 
     @Override
-    public Result<PageResult<UserFriend>> page(PageReq<UserFriend> req) {
+    public PageResult<UserFriend> page(PageReq<UserFriend> req) {
         if(req.getContent() == null) {
             req.setContent(new UserFriend());
         }
@@ -53,7 +52,7 @@ public class UserFriendServiceImpl extends BaseServiceImpl<UserFriend> implement
         return super.repetitionVerify(content);
     }
 
-    public Result add(ToKenContext<UserFriendAddReq> req) {
+    public Result add(RequestContext<UserFriendAddReq> req) {
         UserFriendAddReq content = req.getContent();
         UserInfo userInfo = new UserInfo();
         userInfo.setLoginName(content.getLoginName());

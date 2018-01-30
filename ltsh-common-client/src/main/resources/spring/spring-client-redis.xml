@@ -10,16 +10,16 @@
 
 	<!-- Jedis线程 -->
 	<bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
-		<property name="maxIdle" value="${redis.maxIdle}" />
-		<property name="minIdle" value="${redis.minIdle}" />
-		<property name="maxTotal" value="${redis.maxTotal}" />
+		<property name="maxIdle" value="${spring.redis.pool.max-idle}" />
+		<property name="minIdle" value="${spring.redis.pool.min-idle}" />
+		<!--<property name="maxTotal" value="${redis.maxTotal}" />-->
 		<property name="testOnBorrow" value="true" />
 	</bean>
 
 
 	<bean id="convertShardInfo" class="redis.clients.jedis.JedisShardInfo">
-		<constructor-arg name="host" value="${redis.host}"/>
-		<constructor-arg name="port" value="${redis.port}"/>
+		<constructor-arg name="host" value="${spring.redis.host}"/>
+		<constructor-arg name="port" value="${spring.redis.port}"/>
 	</bean>
 	<bean id="shardedJedisPool" class="redis.clients.jedis.ShardedJedisPool">
 		<constructor-arg index="0" ref="jedisPoolConfig"/>

@@ -1,12 +1,10 @@
 package com.ltsh.chat.service.api;
 
 import com.ltsh.chat.service.entity.UserInfo;
-import com.ltsh.chat.service.req.user.LoginQueryServiceReq;
-import com.ltsh.chat.service.req.user.LoginVerifyServiceReq;
-import com.ltsh.chat.service.req.user.RandomServiceStrGetReq;
-import com.ltsh.chat.service.req.user.UserRegisterServiceReq;
+import com.ltsh.chat.service.req.user.LoginVerifyReq;
+import com.ltsh.chat.service.req.user.UserRegisterReq;
 import com.ltsh.chat.service.resp.Result;
-import com.ltsh.chat.service.resp.user.RandomStrGetResp;
+import com.ltsh.common.entity.RequestContext;
 import com.ltsh.common.entity.UserToken;
 
 /**
@@ -18,20 +16,17 @@ public interface UserService extends BaseService<UserInfo> {
      * @param req
      * @return
      */
-    public Result register(UserRegisterServiceReq req);
+    public Result register(RequestContext<UserRegisterReq> req);
     /**
      * 登录查询
      * @return
      */
-    public Result<UserToken> loginQuery(LoginQueryServiceReq req);
+    public Result<UserToken> loginQuery(RequestContext req);
 
     /**
      * 登录
      * @return
      */
-    public Result<UserToken> loginVerify(LoginVerifyServiceReq req);
-    /**
-     * 随机数
-     */
-    public Result<RandomStrGetResp> getRandomStr(RandomServiceStrGetReq req);
+    public Result<UserToken> loginVerify(RequestContext<LoginVerifyReq> req);
+
 }

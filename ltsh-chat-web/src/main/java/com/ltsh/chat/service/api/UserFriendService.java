@@ -1,10 +1,11 @@
 package com.ltsh.chat.service.api;
 
 import com.ltsh.chat.service.entity.UserFriend;
-import com.ltsh.chat.service.api.BaseService;
+
+import com.ltsh.chat.service.req.friend.UserFriendAddReq;
 import com.ltsh.chat.service.resp.Result;
-import com.ltsh.chat.web.business.user.req.UserFriendAddReq;
-import com.ltsh.common.entity.ToKenContext;
+import com.ltsh.common.entity.RequestContext;
+
 
 /**
  * 好友api
@@ -12,5 +13,5 @@ import com.ltsh.common.entity.ToKenContext;
  */
 public interface UserFriendService extends BaseService<UserFriend> {
 //    public Result<PageResult<FriendQueryResp>> page(PageReq req);
-    public Result add(ToKenContext<UserFriendAddReq> req);
+    public Result add(RequestContext<UserFriendAddReq> req);
 }

@@ -1,28 +1,29 @@
 package com.ltsh.chat.service.req.user;
 
 import com.ltsh.common.entity.ApiContext;
+import com.ltsh.common.entity.BaseReq;
 import lombok.Data;
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  * 登录校验请求类
  * Created by Random on 2017/10/11.
  */
 @Data
-public class LoginVerifyServiceReq extends ApiContext {
+public class LoginVerifyReq extends BaseReq {
     /**
      * 登录名
      */
+    @NotEmpty
     private String loginName;
     /**
      * 密码
      */
+    @NotEmpty
     private String password;
     /**
-     * 随机数key
+     * 密码随机数
      */
-    private String randomKey;
-    /**
-     * 设备id
-     */
-    private String medium;
+    @NotEmpty
+    private String passwordRandomStr;
 }

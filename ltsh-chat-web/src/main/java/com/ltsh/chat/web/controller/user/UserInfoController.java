@@ -1,16 +1,15 @@
-package com.ltsh.chat.web.business.user.controller;
+package com.ltsh.chat.web.controller.user;
 
 import com.ltsh.chat.service.api.UserService;
-import com.ltsh.chat.service.req.user.LoginQueryServiceReq;
-import com.ltsh.chat.service.req.user.UserRegisterServiceReq;
+import com.ltsh.chat.service.req.user.LoginVerifyReq;
+import com.ltsh.chat.service.req.user.UserRegisterReq;
 import com.ltsh.chat.service.resp.Result;
-import com.ltsh.chat.web.business.user.req.UserRegisterReq;
 import com.ltsh.chat.web.common.controller.BaseController;
 import com.ltsh.chat.web.common.req.AppContext;
 import com.ltsh.common.entity.UserToken;
-import com.ltsh.common.utils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -24,19 +23,22 @@ public class UserInfoController extends BaseController {
     private UserService userService;
     @ResponseBody
     @RequestMapping("/register")
-    public Result register(UserRegisterReq req){
-        UserRegisterServiceReq serviceReq = new UserRegisterServiceReq();
-        BeanUtils.copyProperties(req,serviceReq);
-        return userService.register(serviceReq);
+    public Result register(AppContext<UserRegisterReq> req){
+        return userService.register(req);
+    }
+    @ResponseBody
+    @RequestMapping("/loginVerify")
+    public Result<UserToken> loginVerify(@RequestBody AppContext<LoginVerifyReq> req){
+        return userService.loginVerify(req);
+//        return null;
     }
     @ResponseBody
     @RequestMapping("/getInfo")
     public Result getInfo(AppContext req){
-        LoginQueryServiceReq serviceReq = new LoginQueryServiceReq();
-        BeanUtils.copyProperties(req,serviceReq);
-        Result<UserToken> userTokenResult = userService.loginQuery(serviceReq);
+        Result<UserToken> userTokenResult = userService.loginQuery(req);
         UserToken content = userTokenResult.getContent();
         content.setToken("***");
         return userTokenResult;
     }
+
 }

@@ -4,23 +4,19 @@ import com.ltsh.chat.service.api.UserService;
 import com.ltsh.chat.service.config.GlobalConfig;
 import com.ltsh.chat.service.dao.UserInfoDao;
 import com.ltsh.chat.service.enums.ResultCodeEnum;
-import com.ltsh.chat.service.req.user.LoginQueryServiceReq;
-import com.ltsh.chat.service.req.user.RandomServiceStrGetReq;
-import com.ltsh.chat.service.resp.user.RandomStrGetResp;
 import com.ltsh.chat.service.entity.UserInfo;
 import com.ltsh.chat.service.enums.StatusEnums;
-import com.ltsh.chat.service.req.user.LoginVerifyServiceReq;
-import com.ltsh.chat.service.req.user.UserRegisterServiceReq;
+import com.ltsh.chat.service.req.user.LoginVerifyReq;
+import com.ltsh.chat.service.req.user.UserRegisterReq;
 import com.ltsh.chat.service.resp.Result;
 import com.ltsh.chat.service.utils.PasswordUtils;
 import com.ltsh.common.client.redis.RedisKey;
 import com.ltsh.common.client.redis.RedisUtil;
+import com.ltsh.common.entity.RequestContext;
 import com.ltsh.common.entity.UserToken;
 
 import com.ltsh.common.util.JsonUtils;
-import com.ltsh.common.util.LogUtils;
 import com.ltsh.common.util.StringUtils;
-import com.ltsh.common.util.security.AES;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,9 +38,10 @@ public class UserServiceImpl extends BaseServiceImpl<UserInfo> implements UserSe
      * @param req
      * @return
      */
-    public Result register(UserRegisterServiceReq req) {
+    public Result register(RequestContext<UserRegisterReq> req) {
+        UserRegisterReq content = req.getContent();
         UserInfo searchUser = new UserInfo();
-        searchUser.setLoginName(req.getLoginName());
+        searchUser.setLoginName(content.getLoginName());
         List<UserInfo> template = userInfoDao.template(searchUser);
         if(!template.isEmpty()) {
             return new Result(ResultCodeEnum.REPETITION, "用户");
@@ -53,16 +50,16 @@ public class UserServiceImpl extends BaseServiceImpl<UserInfo> implements UserSe
         UserInfo userInfo = new UserInfo();
         userInfo.setCreateBy(0);
         userInfo.setCreateTime(new Date());
-        userInfo.setLoginName(req.getLoginName());
-        userInfo.setName(req.getNickName());
-        userInfo.setNickName(req.getNickName());
-        userInfo.setPassword(PasswordUtils.createPassword(req.getPassword()));
+        userInfo.setLoginName(content.getLoginName());
+        userInfo.setName(content.getNickName());
+        userInfo.setNickName(content.getNickName());
+        userInfo.setPassword(PasswordUtils.createPassword(content.getPassword()));
         userInfo.setStatus(StatusEnums.KY.getValue());
         userInfoDao.insert(userInfo);
         return new Result();
 }
     @Override
-    public Result<UserToken> loginQuery(LoginQueryServiceReq req) {
+    public Result<UserToken> loginQuery(RequestContext req) {
         String s = RedisUtil.get(RedisKey.getRedisKey(RedisKey.TOKEN_KEY, req.getMedium(), req.getToken()));
         if(s != null) {
             UserToken userToken = JsonUtils.fromJson(s, UserToken.class);
@@ -73,10 +70,11 @@ public class UserServiceImpl extends BaseServiceImpl<UserInfo> implements UserSe
     }
 
     @Override
-    public Result<UserToken> loginVerify(LoginVerifyServiceReq req) {
+    public Result<UserToken> loginVerify(RequestContext<LoginVerifyReq> req) {
         //模板查询
         UserInfo query = new UserInfo();
-        query.setLoginName(req.getLoginName());
+        LoginVerifyReq content = req.getContent();
+        query.setLoginName(content.getLoginName());
         List<UserInfo> list = userInfoDao.template(query);
         if(list.isEmpty()) {
             return new Result<>(ResultCodeEnum.LOGIN_FAIL);
@@ -85,7 +83,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserInfo> implements UserSe
         String password = userInfo.getPassword();
         String randomKey = req.getRandomKey();
         String randomValue = RedisUtil.get(RedisKey.getRedisKey(RedisKey.RANDOM_KEY, req.getMedium(), randomKey));
-        if(!PasswordUtils.verify(req.getPassword(), password, randomValue)) {
+        if(!PasswordUtils.verify(content.getPassword(), password, randomValue)) {
             return new Result<>(ResultCodeEnum.LOGIN_FAIL);
         }
         UserToken userToken = new UserToken(userInfo.getId(), userInfo.getLoginName(), userInfo.getName(), userInfo.getPhone(), StringUtils.getUUID());
@@ -99,23 +97,5 @@ public class UserServiceImpl extends BaseServiceImpl<UserInfo> implements UserSe
         return new Result<>(userToken);
     }
 
-    @Override
-    public Result<RandomStrGetResp> getRandomStr(RandomServiceStrGetReq req) {
 
-        String randomKey = StringUtils.getRandomString(6);
-        while(RedisUtil.get(RedisKey.getRedisKey(RedisKey.RANDOM_KEY, req.getMedium(), randomKey)) != null) {
-            randomKey = StringUtils.getRandomString(6);
-        }
-        String randomValue = StringUtils.getRandomString(8);
-        RedisUtil.set(RedisKey.getRedisKey(RedisKey.RANDOM_KEY, req.getMedium(), randomKey), randomValue, GlobalConfig.getInt("randomTimes"));
-        RandomStrGetResp resp = new RandomStrGetResp();
-        try {
-            resp.setRandomKey(AES.encrypt(randomKey, req.getUuid()));
-            resp.setRandomValue(AES.encrypt(randomValue, req.getUuid()));
-            return new Result<>(resp);
-        } catch (Exception e) {
-            LogUtils.error(e.getMessage(), e);
-            return new Result(ResultCodeEnum.FAIL.getCode(), e.getMessage());
-        }
-    }
 }

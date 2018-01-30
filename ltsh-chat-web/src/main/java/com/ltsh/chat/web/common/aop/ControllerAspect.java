@@ -95,6 +95,7 @@ public class ControllerAspect {
 
             Object[] args = pjp.getArgs();
             String keep = StringUtils.getUUID();
+            String flowKeep = keep;
             AppContext signObj = null;
             List list = new ArrayList();
             if(args.length > 0) {
@@ -110,6 +111,10 @@ public class ControllerAspect {
                         if(obj instanceof AppContext) {
                             AppContext app = (AppContext) obj;
                             keep = app.getKeep();
+                            if(!StringUtils.isEmpty(app.getFlowKeep())) {
+                                flowKeep = app.getFlowKeep();
+                            }
+
                             signObj = app;
 
                         }
@@ -119,6 +124,7 @@ public class ControllerAspect {
                 }
             }
             MDC.put("keep", keep);
+            MDC.put("flowKeep", flowKeep);
             boolean isSkip = false;
 
             if(pjp.getSignature().getName().equals("getMessage") || pjp.getSignature().getName().equals("getRandomStr")) {

@@ -1,15 +1,17 @@
 package com.ltsh.chat.service.resp;
 
+import com.ltsh.chat.service.enums.ResultCodeEnum;
+import com.ltsh.common.entity.BaseResult;
 import lombok.Data;
 
-import java.io.Serializable;
+
 import java.util.List;
 
 /**
  * Created by Random on 2017/10/23.
  */
 @Data
-public class PageResult<T> implements Serializable {
+public class PageResult<T> extends BaseResult {
     /**
      * 当前页
      */
@@ -26,4 +28,11 @@ public class PageResult<T> implements Serializable {
      * 结果集
      */
     private List<T> resultList;
+
+    public PageResult() {
+        super(ResultCodeEnum.SUCCESS.getCode(), ResultCodeEnum.SUCCESS.getMessage());
+    }
+    public PageResult(String code, String message) {
+        super(code, message);
+    }
 }

@@ -7,7 +7,6 @@ import com.ltsh.chat.service.entity.UserGroup;
 
 import com.ltsh.chat.service.req.PageReq;
 import com.ltsh.chat.service.resp.PageResult;
-import com.ltsh.chat.service.resp.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,8 +25,7 @@ public class UserGroupServiceImpl extends BaseServiceImpl<UserGroup> implements 
     }
 
     @Override
-    public Result<PageResult<UserGroup>> page(PageReq<UserGroup> req) {
-        Result<PageResult<UserGroup>> page = super.page(req);
-        return page;
+    public PageResult<UserGroup> page(PageReq<UserGroup> req) {
+        return super.page(req);
     }
 }

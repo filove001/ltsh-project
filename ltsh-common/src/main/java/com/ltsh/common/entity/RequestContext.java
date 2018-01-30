@@ -9,31 +9,52 @@ import java.io.Serializable;
  * Created by Random on 2017/10/9.
  */
 @Data
-public class AppContext implements Serializable {
+public class RequestContext<T> implements Serializable {
     /**
-     * 设备媒体uuid
+     * app版本
+     */
+    private String appVersion;
+    /**
+     * 设备id
      */
     @NotEmpty
     private String medium;
     /**
-     * 设备媒体类型 0:内部通讯,1:安卓,2:IOS,3:web端
+     * appId
+     */
+    @NotEmpty
+    private String appId;
+    /**
+     * 设备类型,0:内部通讯,1:安卓,2:IOS,3:web端
      */
     @NotEmpty
     private String mediumType;
     /**
      * 系统版本
      */
-    private String sysVersion;
+    private String systemVersion;
+    /**
+     * 手机厂商
+     */
+    private String deviceBrand;
     /**
      * 手机型号
      */
-    private String phoneModel;
+    private String systemModel;
 
     /**
-     * app版本号
+     * 系统语言
+     */
+    private String systemLanguage;
+    /**
+     * 请求流水
      */
     @NotEmpty
-    private String appVersion;
+    private String keep;
+    /**
+     * 业务请求组,同一个值表示该业务隶属同一个流程
+     */
+    private String flowKeep;
     /**
      * 时间戳字符串
      */
@@ -45,11 +66,6 @@ public class AppContext implements Serializable {
     @NotEmpty
     private String signInfo;
     /**
-     * 请求流水
-     */
-    @NotEmpty
-    private String keep;
-    /**
      * 登录token
      */
     private String token;
@@ -57,13 +73,13 @@ public class AppContext implements Serializable {
      * 用户token
      */
     private UserToken userToken;
-    /**
-     * 应用id
-     */
-    @NotEmpty
-    private String appId;
+
     /**
      * 随机数key
      */
     private String randomKey;
+    /**
+     * 请求数据
+     */
+    private T content;
 }

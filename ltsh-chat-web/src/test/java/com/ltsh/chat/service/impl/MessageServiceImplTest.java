@@ -6,10 +6,10 @@ import com.ltsh.chat.service.api.MessageService;
 
 import com.ltsh.chat.service.entity.MessageInfo;
 import com.ltsh.chat.service.enums.SendTypeEnums;
-import com.ltsh.chat.service.req.message.MessageSendGroupReq;
+import com.ltsh.chat.service.req.message.SendGroupMessageReq;
 import com.ltsh.chat.service.resp.Result;
 import com.ltsh.chat.web.start.StartUp;
-import com.ltsh.common.entity.ToKenContext;
+import com.ltsh.common.entity.RequestContext;
 import com.ltsh.common.entity.UserToken;
 import com.ltsh.common.util.JsonUtils;
 import com.ltsh.common.util.StringUtils;
@@ -34,42 +34,42 @@ public class MessageServiceImplTest {
 //    @Test
     public void sendMsg() throws Exception {
 
-        ToKenContext<MessageInfo> toKenContext = new ToKenContext<>();
+        RequestContext<MessageInfo> context = new RequestContext<>();
         MessageInfo messageInfo = new MessageInfo();
         messageInfo.setMsgType(0);
         messageInfo.setSendType(SendTypeEnums.SX.getValue());
         messageInfo.setMsgContext("你好啊");
         messageInfo.setToUser(1);
-        toKenContext.setContent(messageInfo);
+        context.setContent(messageInfo);
         UserToken userToken = new UserToken(2, "test2", "", "", StringUtils.getUUID());
-        toKenContext.setUserToken(userToken);
+        context.setUserToken(userToken);
         for (int i = 0; i < 10; i++) {
             messageInfo.setMsgContext("test2发来的消息" + i);
-            messageService.sendMsg(toKenContext);
+            messageService.sendMsg(context);
         }
 
     }
 //    @Test
     public void getMsg() throws Exception {
-        ToKenContext toKenContext = new ToKenContext();
+        RequestContext context = new RequestContext();
         UserToken userToken = new UserToken(1, "test1", "", "", StringUtils.getUUID());
-        toKenContext.setUserToken(userToken);
-        Result<MessageInfo> msg = messageService.getMsg(toKenContext);
+        context.setUserToken(userToken);
+        Result<MessageInfo> msg = messageService.getMsg(context);
         System.out.println("结果:" + JsonUtils.toJson(msg));
     }
 //    @Test
     public void sendGroupMsg() throws Exception {
-        ToKenContext<MessageSendGroupReq> toKenContext = new ToKenContext<MessageSendGroupReq>();
-        MessageSendGroupReq req = new MessageSendGroupReq();
-        toKenContext.setContent(req);
+        RequestContext<SendGroupMessageReq> context = new RequestContext<SendGroupMessageReq>();
+        SendGroupMessageReq req = new SendGroupMessageReq();
+        context.setContent(req);
         req.setMsgType(0);
         req.setSendType(SendTypeEnums.QZ.getValue());
         req.setGroupId(1);
         UserToken userToken = new UserToken(2, "test2", "", "", StringUtils.getUUID());
-        toKenContext.setUserToken(userToken);
+        context.setUserToken(userToken);
         req.setToUser(1);
 //        req.setToUserName("test1");
         req.setMsgContext("你好啊");
-        messageService.sendGroupMsg(toKenContext);
+        messageService.sendGroupMsg(context);
     }
 }

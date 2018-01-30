@@ -1,5 +1,6 @@
-package com.ltsh.chat.service.resp;
+package com.ltsh.chat.service.resp.user;
 
+import com.ltsh.common.entity.BaseResp;
 import lombok.Data;
 
 /**

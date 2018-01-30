@@ -5,6 +5,8 @@ package com.ltsh.common.util.http;
 import com.ltsh.common.util.JsonUtils;
 import com.ltsh.common.util.LogUtils;
 
+
+import com.sun.xml.internal.ws.client.RequestContext;
 import okhttp3.*;
 
 import java.io.File;
@@ -24,10 +26,41 @@ public class OkHttpUtils {
 
     static OkHttpClient client = new OkHttpClient.Builder().readTimeout(70L, TimeUnit.SECONDS).writeTimeout(70L, TimeUnit.SECONDS).connectTimeout(70L, TimeUnit.SECONDS).build();
 
-    public static String post(String url, Map<String, Object> json) {
-        return post(url, json, null);
+    public static String postForm(String url, Map<String, Object> json) {
+        return postForm(url, json, null);
     }
-    public static String post(String url, Map<String, Object> json, Map<String, List<File>> fileMap) {
+
+    public static String postJson(String url, Map<String, Object> json) {
+        RequestBody requestBody = RequestBody.create(JSON, JsonUtils.toJson(json));
+        Request request = new Request.Builder()
+                .url(url)
+                .post(requestBody)
+                .build();
+        return execute(request);
+    }
+    private static String execute(Request request) {
+        Response response = null;
+        try {
+            response = client.newCall(request).execute();
+
+            if (response.isSuccessful()) {
+                return response.body().string();
+            } else {
+                throw new IOException("Unexpected code " + response);
+            }
+        } catch (Exception e) {
+            LogUtils.error(e.getMessage(), e);
+        } finally {
+            if(response != null) {
+                response.close();
+            }
+        }
+        Map<String, Object> res = new HashMap<>();
+        res.put("code", "999999");
+        res.put("message", "链接超时");
+        return JsonUtils.toJson(res);
+    }
+    public static String postForm(String url, Map<String, Object> json, Map<String, List<File>> fileMap) {
         return httpRequest(url, "POST", json, fileMap);
     }
 
@@ -68,26 +101,6 @@ public class OkHttpUtils {
                     .get()
                     .build();
         }
-
-        Response response = null;
-        try {
-            response = client.newCall(request).execute();
-
-            if (response.isSuccessful()) {
-                return response.body().string();
-            } else {
-                throw new IOException("Unexpected code " + response);
-            }
-        } catch (Exception e) {
-            LogUtils.error(e.getMessage(), e);
-        } finally {
-            if(response != null) {
-                response.close();
-            }
-        }
-        Map<String, Object> res = new HashMap<>();
-        res.put("code", "999999");
-        res.put("message", "链接超时");
-        return JsonUtils.toJson(res);
+        return execute(request);
     }
 }
