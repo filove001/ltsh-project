@@ -1,6 +1,7 @@
 package com.ltsh.chat.web.controller.user;
 
 import com.ltsh.chat.service.api.UserFriendService;
+import com.ltsh.chat.service.entity.UserFriend;
 import com.ltsh.chat.service.req.PageReq;
 import com.ltsh.chat.service.req.friend.UserFriendAddReq;
 import com.ltsh.chat.service.resp.user.FriendQueryResp;
@@ -27,13 +28,13 @@ public class UserFriendController extends BaseController {
     @ResponseBody
     @RequestMapping("/page")
     @CheckLogin
-    public PageResult<FriendQueryResp> page(PageReq req){
+    public PageResult<UserFriend> page(AppContext<PageReq> req){
         return userFriendService.page(req);
     }
     @ResponseBody
     @RequestMapping("/add")
     @CheckLogin
-    public Result<PageResult<FriendQueryResp>> add(AppContext<UserFriendAddReq> req){
+    public Result add(AppContext<UserFriendAddReq> req){
         return userFriendService.add(req);
     }
 }

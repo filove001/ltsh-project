@@ -1,5 +1,6 @@
 package com.ltsh.chat.service.req;
 
+import com.ltsh.common.entity.BaseReq;
 import com.ltsh.common.entity.RequestContext;
 
 import lombok.Data;
@@ -8,7 +9,7 @@ import lombok.Data;
  * Created by Random on 2017/10/23.
  */
 @Data
-public class PageReq<T> extends RequestContext<T> {
+public class PageReq extends BaseReq {
     /**
      * 当前页
      */

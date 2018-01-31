@@ -1,12 +1,14 @@
 package com.ltsh.chat.web.controller.user;
 
 import com.ltsh.chat.service.api.UserGroupRelService;
+import com.ltsh.chat.service.entity.UserGroupRel;
 import com.ltsh.chat.service.req.PageReq;
 import com.ltsh.chat.service.resp.user.FriendQueryResp;
 import com.ltsh.chat.service.resp.PageResult;
 import com.ltsh.chat.service.resp.Result;
 import com.ltsh.chat.web.common.annotation.CheckLogin;
 import com.ltsh.chat.web.common.controller.BaseController;
+import com.ltsh.chat.web.common.req.AppContext;
 import com.ltsh.chat.web.common.req.PageContext;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,10 +27,8 @@ public class UserGroupRelController extends BaseController {
     @ResponseBody
     @RequestMapping("/page")
     @CheckLogin
-    public PageResult<FriendQueryResp> page(PageContext req){
-        PageReq pageReq = new PageReq();
-        BeanUtils.copyProperties(req, pageReq);
-        return userGroupRelService.page(pageReq);
+    public PageResult<UserGroupRel> page(AppContext<PageReq> req){
+        return userGroupRelService.page(req);
     }
 
 }
