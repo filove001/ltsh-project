@@ -1,12 +1,13 @@
 package com.ltsh.chat.web.common.utils;
 
+import com.ltsh.chat.service.api.RedisService;
 import com.ltsh.chat.web.common.annotation.CheckLogin;
 import com.ltsh.chat.web.common.req.AppContext;
+import com.ltsh.common.client.spring.SpringContextUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
 import com.ltsh.chat.web.common.enums.CheckLoginType;
 import com.ltsh.common.client.redis.RedisKey;
-import com.ltsh.common.client.redis.RedisUtil;
 import com.ltsh.common.entity.UserToken;
 import com.ltsh.common.util.JsonUtils;
 import com.ltsh.common.util.StringUtils;
@@ -27,13 +28,17 @@ public class LoginUtils {
             if(StringUtils.isEmpty(appContext.getToken())){
                 return false;
             }
-            String tokenStr = RedisUtil.get(RedisKey.getRedisKey(RedisKey.TOKEN_KEY, appContext.getToken()));
-            if(StringUtils.isEmpty(tokenStr)){
-                return false;
+            RedisService redisService = SpringContextUtils.getBean(RedisService.class);
+            if(redisService != null) {
+                String tokenStr = redisService.get(RedisKey.getRedisKey(RedisKey.TOKEN_KEY, appContext.getToken()));
+                if(StringUtils.isEmpty(tokenStr)){
+                    return false;
+                }
+                UserToken userToken = JsonUtils.fromJson(tokenStr, UserToken.class);
+                appContext.setUserToken(userToken);
+                return true;
             }
-            UserToken userToken = JsonUtils.fromJson(tokenStr, UserToken.class);
-            appContext.setUserToken(userToken);
-            return true;
+
         }
         return false;
     }

@@ -7,6 +7,10 @@ import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.commons.lang3.StringUtils;
 import com.ltsh.common.util.JsonUtils;
 import com.ltsh.common.util.LogUtils;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
 
 import javax.jms.*;
@@ -17,13 +21,19 @@ import java.util.Map;
 /**
  * Created by fengjb-it on 2016/10/27 0027.
  */
+@Configuration
+@EnableAutoConfiguration
+@Component
 @Data
 public class ActiveMQUtils {
     //默认连接用户名
+    @Value("activemq.userName")
     private String userName = ActiveMQConnection.DEFAULT_USER;
     //默认连接密码
+    @Value("activemq.password")
     private String password = ActiveMQConnection.DEFAULT_PASSWORD;
     //默认连接地址
+    @Value("activemq.brokeUrl")
     private String brokeUrl = "failover:(tcp://192.168.22.214:61616)?randomize=false";
     //
     private int acknowledgeMode = Session.AUTO_ACKNOWLEDGE;
@@ -91,7 +101,6 @@ public class ActiveMQUtils {
 
                 consumerHashMap.put(queueName, consumer);
             }
-
 
             TextMessage textMessage = (TextMessage)consumer.receive(pollTime);
             session.commit();

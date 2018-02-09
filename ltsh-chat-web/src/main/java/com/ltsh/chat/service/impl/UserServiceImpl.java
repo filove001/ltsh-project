@@ -1,5 +1,6 @@
 package com.ltsh.chat.service.impl;
 
+import com.ltsh.chat.service.api.RedisService;
 import com.ltsh.chat.service.api.UserService;
 import com.ltsh.chat.service.config.GlobalConfig;
 import com.ltsh.chat.service.dao.UserInfoDao;
@@ -9,15 +10,15 @@ import com.ltsh.chat.service.enums.StatusEnums;
 import com.ltsh.chat.service.req.user.LoginVerifyReq;
 import com.ltsh.chat.service.req.user.UserRegisterReq;
 import com.ltsh.chat.service.resp.Result;
-import com.ltsh.chat.service.utils.PasswordUtils;
+import com.ltsh.chat.service.utils.WebPasswordUtil;
 import com.ltsh.common.client.redis.RedisKey;
-import com.ltsh.common.client.redis.RedisUtil;
 import com.ltsh.common.entity.RequestContext;
 import com.ltsh.common.entity.UserToken;
 
 import com.ltsh.common.util.JsonUtils;
 import com.ltsh.common.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jms.core.JmsMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -32,13 +33,15 @@ public class UserServiceImpl extends BaseServiceImpl<UserInfo> implements UserSe
     @Autowired
     private UserInfoDao userInfoDao;
 
-
+    @Autowired
+    private RedisService redisService;
     /**
      * 注册
      * @param req
      * @return
      */
     public Result register(RequestContext<UserRegisterReq> req) {
+
         UserRegisterReq content = req.getContent();
         UserInfo searchUser = new UserInfo();
         searchUser.setLoginName(content.getLoginName());
@@ -53,16 +56,20 @@ public class UserServiceImpl extends BaseServiceImpl<UserInfo> implements UserSe
         userInfo.setLoginName(content.getLoginName());
         userInfo.setName(content.getNickName());
         userInfo.setNickName(content.getNickName());
-        userInfo.setPassword(PasswordUtils.createPassword(content.getPassword()));
+        String password = WebPasswordUtil.createPassword(content.getPassword());
+        if(password == null) {
+            return new Result(ResultCodeEnum.FAIL, "注册用户");
+        }
+        userInfo.setPassword(password);
         userInfo.setStatus(StatusEnums.KY.getValue());
         userInfoDao.insert(userInfo);
         return new Result();
 }
     @Override
     public Result<UserToken> loginQuery(RequestContext req) {
-        String s = RedisUtil.get(RedisKey.getRedisKey(RedisKey.TOKEN_KEY, req.getMedium(), req.getToken()));
-        if(s != null) {
-            UserToken userToken = JsonUtils.fromJson(s, UserToken.class);
+        String value = redisService.get(RedisKey.getRedisKey(RedisKey.TOKEN_KEY, req.getMedium(), req.getToken()));
+        if(value != null) {
+            UserToken userToken = JsonUtils.fromJson(value, UserToken.class);
             return new Result<>(userToken);
         } else {
             return new Result<>(ResultCodeEnum.TOKEN_FAIL);
@@ -80,19 +87,19 @@ public class UserServiceImpl extends BaseServiceImpl<UserInfo> implements UserSe
             return new Result<>(ResultCodeEnum.LOGIN_FAIL);
         }
         UserInfo userInfo = list.get(0);
-        String password = userInfo.getPassword();
-        String randomKey = req.getRandomKey();
-        String randomValue = RedisUtil.get(RedisKey.getRedisKey(RedisKey.RANDOM_KEY, req.getMedium(), randomKey));
-        if(!PasswordUtils.verify(content.getPassword(), password, randomValue)) {
+        String dbPassword = userInfo.getPassword();
+        String passwordRandomKey = content.getPasswordRandomKey();
+        String passwordRandomValue = redisService.getAndDel(RedisKey.getRedisKey(RedisKey.RANDOM_KEY, req.getMedium(), passwordRandomKey));
+        if(!WebPasswordUtil.verify(content.getPassword(), dbPassword, passwordRandomValue)) {
             return new Result<>(ResultCodeEnum.LOGIN_FAIL);
         }
         UserToken userToken = new UserToken(userInfo.getId(), userInfo.getLoginName(), userInfo.getName(), userInfo.getPhone(), StringUtils.getUUID());
-        String token = RedisUtil.get(RedisKey.getRedisKey(RedisKey.TOKEN_KEY, userToken.getLoginName()));
+        String token = redisService.get(RedisKey.getRedisKey(RedisKey.TOKEN_KEY, userToken.getLoginName()));
         if(token != null) {
-            RedisUtil.del(RedisKey.getRedisKey(RedisKey.TOKEN_KEY, token));
+            redisService.del(RedisKey.getRedisKey(RedisKey.TOKEN_KEY, token));
         }
-        RedisUtil.set(RedisKey.getRedisKey(RedisKey.TOKEN_KEY, userToken.getLoginName()), userToken.getToken(), GlobalConfig.getInt("tokenTies"));
-        RedisUtil.set(RedisKey.getRedisKey(RedisKey.TOKEN_KEY, userToken.getToken()), userToken, GlobalConfig.getInt("tokenTies"));
+        redisService.set(RedisKey.getRedisKey(RedisKey.TOKEN_KEY, userToken.getLoginName()), userToken.getToken(), GlobalConfig.getLong("tokenTies"));
+        redisService.set(RedisKey.getRedisKey(RedisKey.TOKEN_KEY, userToken.getToken()), userToken, GlobalConfig.getLong("tokenTies"));
 
         return new Result<>(userToken);
     }

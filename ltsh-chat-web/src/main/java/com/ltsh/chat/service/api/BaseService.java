@@ -47,5 +47,5 @@ public interface BaseService<T extends BaseEntity> {
      * @param req
      * @return
      */
-    public PageResult<T> page(RequestContext<PageReq> req);
+    public PageResult<T> page(RequestContext<PageReq<T>> req);
 }

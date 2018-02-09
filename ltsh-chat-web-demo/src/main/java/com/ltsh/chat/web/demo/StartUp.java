@@ -1,16 +1,16 @@
-package com.ltsh.chat.web.demo.start;
+package com.ltsh.chat.web.demo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.ImportResource;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
  * Created by fengjb-it on 2016/7/15 0015.
  */
-@ComponentScan
-@EnableAutoConfiguration
-@ImportResource("classpath:/spring/spring-context.xml")
+//@ComponentScan
+
+@SpringBootApplication
+//@ImportResource("classpath:/spring/spring-context.xml")
 public class StartUp {
 
     public static void main(String[] args) throws Exception {

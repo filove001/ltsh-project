@@ -9,7 +9,7 @@ import lombok.Data;
  * Created by Random on 2017/10/23.
  */
 @Data
-public class PageReq extends BaseReq {
+public class PageReq<T> extends BaseReq {
     /**
      * 当前页
      */
@@ -18,4 +18,5 @@ public class PageReq extends BaseReq {
      * 显示条数
      */
     private Long pageSize;
+    private T content;
 }

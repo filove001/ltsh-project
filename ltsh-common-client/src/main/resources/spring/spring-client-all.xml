@@ -14,7 +14,7 @@
 
 
 
-	<import resource="classpath:spring/spring-client-activemq.xml" />
+	<!--<import resource="classpath:spring/spring-client-activemq.xml" />-->
 	<import resource="classpath:spring/spring-client-redis.xml" />
 
 </beans>

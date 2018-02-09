@@ -35,12 +35,13 @@ public class UserFriendServiceImpl extends BaseServiceImpl<UserFriend> implement
     }
 
     @Override
-    public PageResult<UserFriend> page(PageReq<UserFriend> req) {
-        if(req.getContent() == null) {
-            req.setContent(new UserFriend());
-        }
-        req.getContent().setCreateBy(req.getUserToken().getId());
+    public PageResult<UserFriend> page(RequestContext<PageReq<UserFriend>> req) {
+        PageReq<UserFriend> pageReq = req.getContent();
 
+        if(req.getContent().getContent() == null) {
+            req.getContent().setContent(new UserFriend());
+        }
+        req.getContent().getContent().setCreateBy(req.getUserToken().getId());
         return super.page(req);
     }
 

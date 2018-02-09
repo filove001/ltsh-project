@@ -25,5 +25,5 @@ public class LoginVerifyReq extends BaseReq {
      * 密码随机数
      */
     @NotEmpty
-    private String passwordRandomStr;
+    private String passwordRandomKey;
 }

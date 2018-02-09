@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8" />
 
-    <title>index</title>
+    <title>聊天demo</title>
     <script th:src="@{/js/jquery-1.7.2.js}"></script>
     <script th:inline="javascript">
         /*<![CDATA[*/
@@ -20,7 +20,7 @@
             $('#sendMessageBtn').click(function(){
                 $.ajax({
                     type: "POST",
-                    url: "/chat/demo/sendMessage",
+                    url: "/demo/chat/message/sendMessage",
                     data: $('#messageForm').serialize(),
                     dataType: "json",
                     timeoutNumber: 60000,
@@ -46,7 +46,7 @@
             if(token != '' && token != null) {
                 $.ajax({
                     type: "POST",
-                    url: "/chat/demo/getMessage",
+                    url: "/demo/chat/message/getMessage",
                     data: {"token":token},
                     dataType: "json",
                     timeoutNumber: 60000,

@@ -17,26 +17,39 @@ public class MD5Util {
 	 * @return
 	 */
 	public static String encoder(String data,String charset){
+
+		try {
+			return encoder(data.getBytes(charset));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	/**
+	 * @description 指定参数对MD5进行加密
+	 * @param bytes
+	 * @return
+	 */
+	public static String encoder(byte[] bytes){
 		// 初始化MessageDigest
 		String t = null;
 		MessageDigest md;
 		try {
 			md = MessageDigest.getInstance("MD5");
 			// 执行消息摘要
-			t = Base64.encode(md.digest(data.getBytes(charset)));
+			t = Base64.encode(md.digest(bytes));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return t;
 	}
-
 	/**
 	 * @description 执行MD5加密
 	 * @param data
 	 * @return
 	 */
 	public static String encoder(String data){
-		return encoder(data, "utf-8");
+		return encoder(data, "UTF-8");
 	}
 
 

@@ -104,6 +104,17 @@ public class GlobalConfig extends PropertyPlaceholderConfigurer {
         return Integer.parseInt(value);
     }
 
+    public static long getLong(String key) {
+        return Long.parseLong(ctxPropertiesMap.get(key));
+    }
+
+    public static long getLong(String key, long defaultValue) {
+        String value = ctxPropertiesMap.get(key);
+        if (StringUtils.isBlank(value)) {
+            return defaultValue;
+        }
+        return Long.parseLong(value);
+    }
     /**
      * 根据key获取值
      * @param key

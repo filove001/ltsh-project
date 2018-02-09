@@ -68,11 +68,12 @@ public abstract class BaseServiceImpl<T extends BaseEntity> implements BaseServi
      * @param req
      * @return
      */
-    public PageResult<T> page(PageReq<T> req) {
+    public PageResult<T> page(RequestContext<PageReq<T>> req) {
+        PageReq pageReq = req.getContent();
         PageQuery pageQuery = new PageQuery<>();
-        pageQuery.setPageNumber(req.getPageNumber());
-        pageQuery.setPageSize(req.getPageSize());
-        pageQuery.setParas(req.getContent());
+        pageQuery.setPageNumber(pageReq.getPageNumber());
+        pageQuery.setPageSize(pageReq.getPageSize());
+        pageQuery.setParas(req.getContent().getContent());
         baseDao.page(pageQuery);
         PageResult<T> pageResult = new PageResult<>();
         pageResult.setPageNumber(pageQuery.getPageNumber());

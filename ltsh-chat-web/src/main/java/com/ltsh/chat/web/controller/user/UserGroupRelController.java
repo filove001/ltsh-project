@@ -13,6 +13,7 @@ import com.ltsh.chat.web.common.req.PageContext;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -27,7 +28,7 @@ public class UserGroupRelController extends BaseController {
     @ResponseBody
     @RequestMapping("/page")
     @CheckLogin
-    public PageResult<UserGroupRel> page(AppContext<PageReq> req){
+    public PageResult<UserGroupRel> page(@RequestBody AppContext<PageReq<UserGroupRel>> req){
         return userGroupRelService.page(req);
     }
 

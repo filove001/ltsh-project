@@ -23,7 +23,7 @@ public class UserInfoController extends BaseController {
     private UserService userService;
     @ResponseBody
     @RequestMapping("/register")
-    public Result register(AppContext<UserRegisterReq> req){
+    public Result register(@RequestBody AppContext<UserRegisterReq> req){
         return userService.register(req);
     }
     @ResponseBody
@@ -34,7 +34,7 @@ public class UserInfoController extends BaseController {
     }
     @ResponseBody
     @RequestMapping("/getInfo")
-    public Result getInfo(AppContext req){
+    public Result getInfo(@RequestBody AppContext req){
         Result<UserToken> userTokenResult = userService.loginQuery(req);
         UserToken content = userTokenResult.getContent();
         content.setToken("***");

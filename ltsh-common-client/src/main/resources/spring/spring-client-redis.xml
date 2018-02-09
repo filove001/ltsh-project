@@ -10,8 +10,8 @@
 
 	<!-- Jedis线程 -->
 	<bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
-		<property name="maxIdle" value="${spring.redis.pool.max-idle}" />
-		<property name="minIdle" value="${spring.redis.pool.min-idle}" />
+		<property name="maxIdle" value="${redis.pool.max-idle}" />
+		<property name="minIdle" value="${redis.pool.min-idle}" />
 		<!--<property name="maxTotal" value="${redis.maxTotal}" />-->
 		<property name="testOnBorrow" value="true" />
 	</bean>

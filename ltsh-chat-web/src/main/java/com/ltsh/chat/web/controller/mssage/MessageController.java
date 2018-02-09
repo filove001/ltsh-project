@@ -13,6 +13,7 @@ import com.ltsh.chat.web.common.controller.BaseController;
 import com.ltsh.chat.web.common.req.AppContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -31,13 +32,13 @@ public class MessageController extends BaseController {
     @ResponseBody
     @RequestMapping("/sendMessage")
     @CheckLogin
-    public Result sendMessage(AppContext<MessageInfo> req){
+    public Result sendMessage(@RequestBody AppContext<MessageInfo> req){
         return messageService.sendMsg(req);
     }
     @ResponseBody
     @RequestMapping("/sendFileMessage")
     @CheckLogin
-    public Result sendFileMessage(AppContext<SendFileMessageReq> req, MultipartHttpServletRequest multiReq){
+    public Result sendFileMessage(@RequestBody AppContext<SendFileMessageReq> req, MultipartHttpServletRequest multiReq){
 //        MultipartFile multipartFile = multiReq.getFile("file");
 //        File file = new File(uploadFile);
 //        if(file.exists())
@@ -58,13 +59,13 @@ public class MessageController extends BaseController {
     @ResponseBody
     @RequestMapping("/getMessage")
     @CheckLogin
-    public Result<MessageInfo> getMessage(AppContext req){
+    public Result<MessageInfo> getMessage(@RequestBody AppContext req){
         return messageService.getMsg(req);
     }
     @ResponseBody
     @RequestMapping("/readMessage")
     @CheckLogin
-    public Result readMessage(AppContext<MessageInfo> req){
+    public Result readMessage(@RequestBody AppContext<MessageInfo> req){
         return messageService.readMsg(req);
     }
 }

@@ -5,6 +5,7 @@ import com.ltsh.common.entity.BaseResult;
 import lombok.Data;
 
 
+import java.io.Serializable;
 import java.util.List;
 
 /**

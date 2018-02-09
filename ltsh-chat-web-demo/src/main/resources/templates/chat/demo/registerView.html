@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8" />
 
-    <title>登录demo</title>
+    <title>注册demo</title>
     <script th:src="@{/js/jquery-1.7.2.js}"></script>
     <script th:inline="javascript">
         /*<![CDATA[*/
@@ -14,7 +14,7 @@
             $('#submitBtn').click(function(){
                 $.ajax({
                     type: "POST",
-                    url: "/demo/chat/user/loginVerify",
+                    url: "/demo/chat/user/register",
                     data: $('#messageForm').serialize(),
                     dataType: "json",
                     timeoutNumber: 60000,
@@ -67,15 +67,14 @@
             <label>密码</label>
             <input type="password" name="password" id="password" />
             <br/>
-
+            <label>昵称</label>
+            <input type="text" name="nickName" id="nickName" />
+            <br/>
         </form>
-        <input type="button" value="登录" id="submitBtn"/>
+        <input type="button" value="注册" id="submitBtn"/>
     </div>
     <div id="context" >
-        <dl>
-            <dt>test</dt>
-            <dd>aaa</dd>
-        </dl>
+
     </div>
 </body>
 </html>

@@ -21,8 +21,14 @@ import com.ltsh.common.utils.BeanUtils;
 import com.ltsh.common.util.JsonUtils;
 import com.ltsh.common.util.LogUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jms.core.JmsMessagingTemplate;
+import org.springframework.messaging.Message;
 import org.springframework.stereotype.Service;
 
+import javax.jms.ConnectionConsumer;
+import javax.jms.Destination;
+import javax.jms.Queue;
+import javax.jms.Session;
 import java.util.Date;
 import java.util.List;
 
@@ -44,6 +50,8 @@ public class MessageServiceImpl extends BaseServiceImpl<MessageInfo> implements 
     private UserGroupRelDao userGroupRelDao;
     @Autowired
     private MessageInfoFileDao messageInfoFileDao;
+    @Autowired
+    private JmsMessagingTemplate jmsMessagingTemplate;
 //    @Autowired
 //    private UserGroupRelService userGroupRelService;
     @Autowired
@@ -54,6 +62,7 @@ public class MessageServiceImpl extends BaseServiceImpl<MessageInfo> implements 
 
     @Override
     public Result<MessageInfo> sendMsg(RequestContext<MessageInfo> req) {
+
         return sendMessage(req.getContent(), req.getUserToken().getId());
     }
 
@@ -103,6 +112,15 @@ public class MessageServiceImpl extends BaseServiceImpl<MessageInfo> implements 
     @Override
     public Result<MessageInfo> getMsg(RequestContext req) {
         try {
+            Session session = jmsMessagingTemplate.getConnectionFactory().createConnection().createSession(true, Session.AUTO_ACKNOWLEDGE);
+            Queue queue = session.createQueue("");
+            session.createConsumer(queue);
+            ConnectionConsumer connectionConsumer = jmsMessagingTemplate.getConnectionFactory().createConnection().createConnectionConsumer();
+
+            jmsMessagingTemplate.receive()
+            Message<?> receive = jmsMessagingTemplate.receive(getQueueName(req.getUserToken().getId() + ""));
+            MessageInfo payload = (MessageInfo) receive.getPayload();
+
             MessageInfo messageInfo = activeMQUtils.getMessage(req.getUserToken().getId() + "", MessageInfo.class);
             if(messageInfo != null) {
                 LogUtils.info("获取消息内容为:{}", JsonUtils.toJson(messageInfo));
@@ -142,12 +160,17 @@ public class MessageServiceImpl extends BaseServiceImpl<MessageInfo> implements 
         messageDao.insert(messageInfo, true);
         try {
             LogUtils.info("发送消息内容为:{}", JsonUtils.toJson(messageInfo));
-            activeMQUtils.sendMessage(messageInfo.getToUser() + "",messageInfo);
+            jmsMessagingTemplate.convertAndSend(getQueueName(messageInfo.getToUser() + ""), messageInfo);
+//            activeMQUtils.sendMessage(messageInfo.getToUser() + "",messageInfo);
             return new Result<MessageInfo>(messageInfo);
         } catch (Exception e) {
             LogUtils.error("发送消息失败!", e);
         }
         return new Result<>(ResultCodeEnum.FAIL, "发送消息");
+    }
+    private final static String QUEUE_PRE = "QUEUE_PRE_";
+    private String getQueueName(String userCode){
+        return QUEUE_PRE + userCode;
     }
 }
 

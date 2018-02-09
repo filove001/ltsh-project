@@ -8,7 +8,7 @@ import com.ltsh.chat.service.entity.MessageInfo;
 import com.ltsh.chat.service.enums.SendTypeEnums;
 import com.ltsh.chat.service.req.message.SendGroupMessageReq;
 import com.ltsh.chat.service.resp.Result;
-import com.ltsh.chat.web.start.StartUp;
+import com.ltsh.chat.StartUp;
 import com.ltsh.common.entity.RequestContext;
 import com.ltsh.common.entity.UserToken;
 import com.ltsh.common.util.JsonUtils;
