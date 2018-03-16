@@ -1,8 +1,9 @@
 package com.ltsh.chat.service.api;
 
-import com.ltsh.chat.service.resp.Result;
+import com.ltsh.chat.service.req.ServiceReq;
 import com.ltsh.chat.service.resp.basics.RandomResp;
-import com.ltsh.common.entity.RequestContext;
+
+import com.ltsh.util.beetsql.entity.result.ContentResult;
 
 
 /**
@@ -10,5 +11,5 @@ import com.ltsh.common.entity.RequestContext;
  */
 public interface BasicsService {
 
-    public Result<RandomResp> getRandomStr(RequestContext<String> req);
+    public ContentResult<RandomResp> getRandomStr(ServiceReq<String> req);
 }

@@ -14,15 +14,15 @@ import java.util.Set;
  */
 public class SignUtils {
     public static void main(String[] args) {
-        RequestContext<Map<String, Object>> requestContext = new RequestContext<>();
+        RequestContext<Map<String, Object>> requestContext = new RequestContext<Map<String, Object>>();
         requestContext.setAppId("123");
-        HashMap<String, Object> map = new HashMap<>();
+        HashMap<String, Object> map = new HashMap<String, Object>();
         map.put("name", "123");
         map.put("age", 1);
-        HashMap<String, Object> map1 = new HashMap<>();
+        HashMap<String, Object> map1 = new HashMap<String, Object>();
         map1.put("test", "test");
         map1.put("aa", "aa");
-        HashMap<String, Object> map2 = new HashMap<>();
+        HashMap<String, Object> map2 = new HashMap<String, Object>();
         map2.put("test", "test");
         map2.put("aa", "aa");
         map1.put("content", map2);

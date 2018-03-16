@@ -55,7 +55,7 @@ public class OkHttpUtils {
                 response.close();
             }
         }
-        Map<String, Object> res = new HashMap<>();
+        Map<String, Object> res = new HashMap<String, Object>();
         res.put("code", "999999");
         res.put("message", "链接超时");
         return JsonUtils.toJson(res);
@@ -66,6 +66,25 @@ public class OkHttpUtils {
 
     public static String get(String url) {
         return httpRequest(url, "GET", null, null);
+    }
+
+    public static byte[] downloadByJson(String url, String methodType, Map<String, Object> json) {
+        Request request = null;
+        if(methodType.equals("POST")) {
+            RequestBody requestBody = RequestBody.create(JSON, JsonUtils.toJson(json));
+            request = (new Request.Builder()).url(url).post(requestBody).build();
+        } else {
+            request = (new Request.Builder()).url(url).get().build();
+        }
+
+        Response response = null;
+        try {
+            response = client.newCall(request).execute();
+            return response.body().bytes();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public static String httpRequest(String url, String methodType, Map<String, Object> json, Map<String, List<File>> fileMap) {

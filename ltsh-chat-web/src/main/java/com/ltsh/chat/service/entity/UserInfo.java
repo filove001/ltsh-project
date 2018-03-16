@@ -2,6 +2,7 @@ package com.ltsh.chat.service.entity;
 
 
 
+import com.ltsh.util.beetsql.entity.BaseEntity;
 import lombok.Data;
 import lombok.ToString;
 

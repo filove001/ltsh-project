@@ -1,6 +1,8 @@
-package com.ltsh.chat.service.dao;
+package com.ltsh.util.beetsql.dao;
 
-import com.ltsh.chat.service.entity.BaseEntity;
+
+
+import com.ltsh.util.beetsql.entity.BaseEntity;
 import org.beetl.sql.core.engine.PageQuery;
 import org.beetl.sql.core.mapper.BaseMapper;
 

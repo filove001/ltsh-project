@@ -38,7 +38,7 @@ public class DbUtils {
         return columns;
     }
     public static Object[] getValues(Object object) {
-        List<Object> list = new ArrayList<>();
+        List<Object> list = new ArrayList<Object>();
         List<Field> declaredFields = FieldUtils.getFieldList(object.getClass());
         for (Field field:declaredFields) {
             if(field.getName().toUpperCase().equals("ID") || field.getAnnotation(NoDbColumn.class) != null) {
@@ -103,7 +103,7 @@ public class DbUtils {
         List<Field> fieldList = FieldUtils.getFieldList(classT);
 
         String tableName = getTableName(classT);
-        List<DbColumn> columns = new ArrayList<>();
+        List<DbColumn> columns = new ArrayList<DbColumn>();
         for (int i = 0; i < fieldList.size(); i++) {
             Field field = fieldList.get(i);
             String name = field.getName();

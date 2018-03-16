@@ -3,8 +3,10 @@ package com.ltsh.chat.service.api;
 import com.ltsh.chat.service.entity.MessageInfo;
 import com.ltsh.chat.service.req.message.SendFileMessageReq;
 import com.ltsh.chat.service.req.message.SendGroupMessageReq;
-import com.ltsh.chat.service.resp.Result;
 import com.ltsh.common.entity.RequestContext;
+import com.ltsh.util.beetsql.api.BaseService;
+import com.ltsh.util.beetsql.entity.req.BaseReq;
+import com.ltsh.util.beetsql.entity.result.ContentResult;
 
 /**
  * Created by fengjb-it on 2016/11/4 0004.
@@ -14,25 +16,25 @@ public interface MessageService extends BaseService<MessageInfo> {
      * 发送消息
      * @param req
      */
-    public Result<MessageInfo> sendMsg(RequestContext<MessageInfo> req);
+    public ContentResult<MessageInfo> sendMsg(BaseReq<MessageInfo> req);
     /**
      * 发送消息
      * @param req
      */
-    public Result<MessageInfo> sendGroupMsg(RequestContext<SendGroupMessageReq> req);
+    public ContentResult<MessageInfo> sendGroupMsg(BaseReq<SendGroupMessageReq> req);
     /**
      * 获取消息
      * @param req
      */
-    public Result<MessageInfo> getMsg(RequestContext req);
+    public ContentResult<MessageInfo> getMsg(BaseReq req);
 
     /**
      * 读取消息
      * @param req
      * @return
      */
-    public Result readMsg(RequestContext<MessageInfo> req);
+    public ContentResult readMsg(BaseReq<MessageInfo> req);
 
-    public Result<MessageInfo> sendFileMsg(RequestContext<SendFileMessageReq> req);
+    public ContentResult<MessageInfo> sendFileMsg(BaseReq<SendFileMessageReq> req);
 
 }

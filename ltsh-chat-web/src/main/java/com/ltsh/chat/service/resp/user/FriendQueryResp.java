@@ -1,13 +1,13 @@
 package com.ltsh.chat.service.resp.user;
 
-import com.ltsh.common.entity.BaseResp;
+import com.ltsh.chat.service.resp.WebResp;
 import lombok.Data;
 
 /**
  * Created by Random on 2017/10/23.
  */
 @Data
-public class FriendQueryResp extends BaseResp {
+public class FriendQueryResp extends WebResp {
     /**
      * 名称
      */

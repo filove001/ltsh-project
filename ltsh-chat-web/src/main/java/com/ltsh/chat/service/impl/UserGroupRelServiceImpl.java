@@ -5,6 +5,7 @@ import com.ltsh.chat.service.api.UserGroupRelService;
 import com.ltsh.chat.service.dao.UserGroupRelDao;
 import com.ltsh.chat.service.entity.UserGroupRel;
 
+import com.ltsh.util.beetsql.impl.BaseServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

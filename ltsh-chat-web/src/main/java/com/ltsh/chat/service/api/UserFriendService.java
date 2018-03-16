@@ -3,8 +3,9 @@ package com.ltsh.chat.service.api;
 import com.ltsh.chat.service.entity.UserFriend;
 
 import com.ltsh.chat.service.req.friend.UserFriendAddReq;
-import com.ltsh.chat.service.resp.Result;
-import com.ltsh.common.entity.RequestContext;
+import com.ltsh.util.beetsql.api.BaseService;
+import com.ltsh.util.beetsql.entity.req.BaseReq;
+import com.ltsh.util.beetsql.entity.result.ContentResult;
 
 
 /**
@@ -13,5 +14,5 @@ import com.ltsh.common.entity.RequestContext;
  */
 public interface UserFriendService extends BaseService<UserFriend> {
 //    public Result<PageResult<FriendQueryResp>> page(PageReq req);
-    public Result add(RequestContext<UserFriendAddReq> req);
+    public ContentResult add(BaseReq<UserFriendAddReq> req);
 }

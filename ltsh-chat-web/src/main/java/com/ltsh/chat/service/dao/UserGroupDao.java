@@ -1,6 +1,7 @@
 package com.ltsh.chat.service.dao;
 
 import com.ltsh.chat.service.entity.UserGroup;
+import com.ltsh.util.beetsql.dao.BaseDao;
 import org.beetl.sql.core.engine.PageQuery;
 
 /**

@@ -5,9 +5,11 @@ import com.ltsh.chat.service.api.UserGroupService;
 import com.ltsh.chat.service.dao.UserGroupDao;
 import com.ltsh.chat.service.entity.UserGroup;
 
-import com.ltsh.chat.service.req.PageReq;
-import com.ltsh.chat.service.resp.PageResult;
+
 import com.ltsh.common.entity.RequestContext;
+import com.ltsh.util.beetsql.entity.req.PageReq;
+import com.ltsh.util.beetsql.entity.result.PageResult;
+import com.ltsh.util.beetsql.impl.BaseServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +28,7 @@ public class UserGroupServiceImpl extends BaseServiceImpl<UserGroup> implements 
     }
 
     @Override
-    public PageResult<UserGroup> page(RequestContext<PageReq<UserGroup>> req) {
+    public PageResult<UserGroup> page(PageReq<UserGroup> req) {
         return super.page(req);
     }
 }

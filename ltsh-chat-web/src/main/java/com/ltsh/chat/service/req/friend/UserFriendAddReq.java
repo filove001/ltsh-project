@@ -1,14 +1,13 @@
 package com.ltsh.chat.service.req.friend;
 
-import com.ltsh.common.entity.BaseReq;
-import com.ltsh.common.entity.ToKenContext;
+
 import lombok.Data;
 
 /**
  * Created by Random on 2017/11/9.
  */
 @Data
-public class UserFriendAddReq extends BaseReq {
+public class UserFriendAddReq {
     /**
      * 添加好友id
      */

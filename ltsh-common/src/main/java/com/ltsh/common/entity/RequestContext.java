@@ -69,10 +69,6 @@ public class RequestContext<T> implements Serializable {
      * 登录token
      */
     private String token;
-    /**
-     * 用户token
-     */
-    private UserToken userToken;
 
     /**
      * 随机数key

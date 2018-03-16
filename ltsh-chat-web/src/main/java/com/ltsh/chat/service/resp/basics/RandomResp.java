@@ -1,7 +1,6 @@
 package com.ltsh.chat.service.resp.basics;
 
-import com.ltsh.common.entity.ApiContext;
-import com.ltsh.common.entity.BaseResp;
+import com.ltsh.chat.service.resp.WebResp;
 import lombok.Data;
 
 /**
@@ -9,7 +8,7 @@ import lombok.Data;
  * Created by Random on 2017/10/11.
  */
 @Data
-public class RandomResp extends BaseResp {
+public class RandomResp extends WebResp {
     /**
      * 随机数key
      */

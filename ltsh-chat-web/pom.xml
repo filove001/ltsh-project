@@ -103,6 +103,10 @@
             <artifactId>ltsh-common</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.ltsh</groupId>
+            <artifactId>ltsh-util-beetsql</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
             <exclusions>

@@ -30,6 +30,7 @@
     </properties>
     <modules>
         <module>../ltsh-util</module>
+        <module>../ltsh-util-beetsql</module>
         <module>../ltsh-common</module>
         <module>../ltsh-common-client</module>
         <module>../ltsh-chat-web</module>
@@ -55,7 +56,12 @@
             <dependency>
                 <groupId>com.ltsh</groupId>
                 <artifactId>ltsh-util</artifactId>
-                <version>${ltsh.util.version}</version>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.ltsh</groupId>
+                <artifactId>ltsh-util-beetsql</artifactId>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.ltsh</groupId>

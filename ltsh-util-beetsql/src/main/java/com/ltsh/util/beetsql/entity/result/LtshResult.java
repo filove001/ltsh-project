@@ -1,28 +1,17 @@
-package com.ltsh.common.entity;
-
-import lombok.Data;
+package com.ltsh.util.beetsql.entity.result;
 
 import java.io.Serializable;
 
 /**
- * Created by Random on 2017/10/9.
+ * Created by fengjianbo on 2018/3/8.
  */
-@Data
-public class BaseResult implements Serializable {
+public class LtshResult implements Serializable {
     private String code;
     private String message;
 
-
-    public BaseResult(String code, String message) {
+    public LtshResult(String code, String message) {
         this.code = code;
         this.message = message;
-    }
-
-    public boolean isSucceed() {
-        if("000000".equals(this.code)) {
-            return true;
-        }
-        return false;
     }
 
     public String getCode() {
@@ -40,5 +29,6 @@ public class BaseResult implements Serializable {
     public void setMessage(String message) {
         this.message = message;
     }
+
 
 }

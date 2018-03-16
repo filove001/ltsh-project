@@ -5,6 +5,7 @@ import com.ltsh.chat.service.api.MessageInfoFileService;
 import com.ltsh.chat.service.dao.MessageInfoFileDao;
 import com.ltsh.chat.service.entity.MessageInfoFile;
 
+import com.ltsh.util.beetsql.impl.BaseServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

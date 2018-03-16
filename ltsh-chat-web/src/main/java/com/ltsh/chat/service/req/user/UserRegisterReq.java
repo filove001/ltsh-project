@@ -1,7 +1,7 @@
 package com.ltsh.chat.service.req.user;
 
+import com.ltsh.chat.service.req.WebReq;
 import com.ltsh.common.entity.ApiContext;
-import com.ltsh.common.entity.BaseReq;
 import lombok.Data;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -9,7 +9,7 @@ import org.hibernate.validator.constraints.NotEmpty;
  * Created by Random on 2017/11/7.
  */
 @Data
-public class UserRegisterReq extends BaseReq {
+public class UserRegisterReq extends WebReq {
     /**
      * 登录名
      */

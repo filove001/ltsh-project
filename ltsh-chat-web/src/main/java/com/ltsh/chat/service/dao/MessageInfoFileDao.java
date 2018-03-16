@@ -1,6 +1,7 @@
 package com.ltsh.chat.service.dao;
 
 import com.ltsh.chat.service.entity.MessageInfoFile;
+import com.ltsh.util.beetsql.dao.BaseDao;
 import org.beetl.sql.core.engine.PageQuery;
 /**
  * Created by fengjianbo on 2018-01-05 11:50:30.
