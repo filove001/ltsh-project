@@ -37,7 +37,7 @@ public class BasicsServiceImpl implements BasicsService {
         try {
             resp.setRandomKey(AES.encrypt(randomKey, req.getContent()));
             resp.setRandomValue(AES.encrypt(randomValue, req.getContent()));
-            return new ContentResult<>(resp);
+            return new ContentResult<RandomResp>(WebResultCode.CG, resp);
         } catch (Exception e) {
             LogUtils.error(e.getMessage(), e);
             return new ContentResult(WebResultCode.SB_FORMAT.getCode(), e.getMessage());

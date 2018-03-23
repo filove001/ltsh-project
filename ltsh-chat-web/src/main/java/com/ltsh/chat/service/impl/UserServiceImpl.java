@@ -74,9 +74,9 @@ public class UserServiceImpl extends BaseServiceImpl<UserInfo> implements UserSe
         String value = redisService.get(RedisKey.getRedisKey(RedisKey.TOKEN_KEY, req.getMedium(), req.getUserToken().getToken()));
         if(value != null) {
             UserToken userToken = JsonUtils.fromJson(value, UserToken.class);
-            return new ContentResult<>(userToken);
+            return new ContentResult<UserToken>(WebResultCode.CG, userToken);
         } else {
-            return new ContentResult<>(WebResultCode.TOKEN_SX);
+            return new ContentResult<UserToken>(WebResultCode.TOKEN_SX);
         }
     }
 
@@ -99,7 +99,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserInfo> implements UserSe
         }
         UserToken userToken = new UserToken();
         userToken.setToken(StringUtils.getUUID());
-        userToken.setUesrId(userInfo.getId());
+        userToken.setUserId(userInfo.getId());
         userToken.setLoginTime(new Date());
         userToken.setUserName(userInfo.getName());
         userToken.setLoginName(userInfo.getLoginName());
@@ -111,7 +111,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserInfo> implements UserSe
         redisService.set(RedisKey.getRedisKey(RedisKey.TOKEN_KEY, userToken.getLoginName()), userToken.getToken(), GlobalConfig.getLong("tokenTies"));
         redisService.set(RedisKey.getRedisKey(RedisKey.TOKEN_KEY, userToken.getToken()), userToken, GlobalConfig.getLong("tokenTies"));
 
-        return new ContentResult<>(userToken);
+        return new ContentResult<UserToken>(WebResultCode.CG, userToken);
     }
 
 

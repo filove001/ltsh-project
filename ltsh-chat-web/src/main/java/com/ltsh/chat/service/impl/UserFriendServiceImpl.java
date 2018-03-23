@@ -11,6 +11,7 @@ import com.ltsh.chat.service.enums.WebResultCode;
 import com.ltsh.chat.service.req.friend.UserFriendAddReq;
 import com.ltsh.common.entity.RequestContext;
 
+import com.ltsh.util.beetsql.entity.req.BaseReq;
 import com.ltsh.util.beetsql.entity.req.PageReq;
 import com.ltsh.util.beetsql.entity.result.ContentResult;
 import com.ltsh.util.beetsql.entity.result.PageResult;
@@ -36,14 +37,6 @@ public class UserFriendServiceImpl extends BaseServiceImpl<UserFriend> implement
         this.baseDao = userFriendDao;
     }
 
-    @Override
-    public PageResult<UserFriend> page(PageReq<UserFriend> req) {
-        if(req.getContent() == null) {
-            req.setContent(new UserFriend());
-        }
-        req.getContent().setCreateBy(req.getUserToken().getUesrId());
-        return super.page(req);
-    }
 
     @Override
     public ContentResult repetitionVerify(UserFriend content) {
@@ -53,17 +46,18 @@ public class UserFriendServiceImpl extends BaseServiceImpl<UserFriend> implement
         return super.repetitionVerify(content);
     }
 
-    public ContentResult add(UserFriendAddReq req) {
+    public ContentResult add(BaseReq<UserFriendAddReq> req) {
 //        UserFriendAddReq content = req.getContent();
+        UserFriendAddReq userFriendAddReq = req.getContent();
         UserInfo userInfo = new UserInfo();
-        userInfo.setLoginName(req.getLoginName());
+        userInfo.setLoginName(userFriendAddReq.getLoginName());
         UserInfo userInfo1 = userInfoDao.templateOne(userInfo);
         UserFriend userFriend = new UserFriend();
         userFriend.setFriendUserId(userInfo1.getId());
-        userFriend.setName(req.getName());
+        userFriend.setName(userFriendAddReq.getName());
         userFriend.setStatus(StatusEnums.KY.getValue());
         userFriend.setCreateTime(new Date());
-        userFriend.setCreateBy(req.getUserToken().getUesrId());
+        userFriend.setCreateBy(req.getUserToken().getUserId());
         userFriendDao.insert(userFriend);
         return new ContentResult(WebResultCode.CG);
     }

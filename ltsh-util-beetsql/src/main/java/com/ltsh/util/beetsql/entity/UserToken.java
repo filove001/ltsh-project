@@ -17,7 +17,7 @@ public class UserToken implements Serializable {
     /**
      * 用户id
      */
-    private Integer uesrId;
+    private Integer userId;
     /**
      * 用户名
      */
@@ -79,12 +79,12 @@ public class UserToken implements Serializable {
         this.extraParams = extraParams;
     }
 
-    public Integer getUesrId() {
-        return uesrId;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setUesrId(Integer uesrId) {
-        this.uesrId = uesrId;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     public String getUserName() {

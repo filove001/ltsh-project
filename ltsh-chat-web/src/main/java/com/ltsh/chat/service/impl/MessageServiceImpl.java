@@ -8,7 +8,7 @@ import com.ltsh.chat.service.entity.MessageInfoFile;
 import com.ltsh.chat.service.entity.UserGroupRel;
 import com.ltsh.chat.service.enums.StatusEnums;
 import com.ltsh.chat.service.enums.WebResultCode;
-import com.ltsh.chat.service.req.WebReq;
+
 import com.ltsh.chat.service.req.message.SendFileMessageReq;
 import com.ltsh.chat.service.req.message.SendGroupMessageReq;
 
@@ -67,20 +67,20 @@ public class MessageServiceImpl extends BaseServiceImpl<MessageInfo> implements 
     @Override
     public ContentResult<MessageInfo> sendMsg(BaseReq<MessageInfo> req) {
 
-        return sendMessage(req.getContent(), req.getUserToken().getUesrId());
+        return sendMessage(req.getContent(), req.getUserToken().getUserId());
     }
 
 
 
     @Override
     public ContentResult<MessageInfo> sendFileMsg(BaseReq<SendFileMessageReq> req) {
-        ContentResult<MessageInfo> messageInfoResult = sendMessage(req.getContent(), req.getUserToken().getUesrId());
+        ContentResult<MessageInfo> messageInfoResult = sendMessage(req.getContent(), req.getUserToken().getUserId());
         if(messageInfoResult.chengGong()) {
             MessageInfo resultMessage = messageInfoResult.getContent();
             MessageInfoFile messageInfoFile = new MessageInfoFile();
             messageInfoFile.setFilePath(req.getContent().getFilePath());
             messageInfoFile.setMessageId(resultMessage.getId());
-            messageInfoFile.setCreateBy(req.getUserToken().getUesrId());
+            messageInfoFile.setCreateBy(req.getUserToken().getUserId());
             messageInfoFile.setCreateTime(new Date());
             messageInfoFileDao.insert(messageInfoFile, true);
         }
@@ -122,16 +122,16 @@ public class MessageServiceImpl extends BaseServiceImpl<MessageInfo> implements 
 //            ConnectionConsumer connectionConsumer = jmsMessagingTemplate.getConnectionFactory().createConnection().createConnectionConsumer();
 
 //            jmsMessagingTemplate.receive()
-            Message<?> receive = jmsMessagingTemplate.receive(getQueueName(req.getUserToken().getUesrId() + ""));
+            Message<?> receive = jmsMessagingTemplate.receive(getQueueName(req.getUserToken().getUserId() + ""));
             MessageInfo payload = (MessageInfo) receive.getPayload();
 
-            MessageInfo messageInfo = activeMQUtils.getMessage(req.getUserToken().getUesrId() + "", MessageInfo.class);
+            MessageInfo messageInfo = activeMQUtils.getMessage(req.getUserToken().getUserId() + "", MessageInfo.class);
             if(messageInfo != null) {
                 LogUtils.info("获取消息内容为:{}", JsonUtils.toJson(messageInfo));
                 messageInfo.setStatus(StatusEnums.YSD.getValue());
                 messageDao.updateById(messageInfo);
             }
-            return new ContentResult<MessageInfo>(messageInfo);
+            return new ContentResult<MessageInfo>(WebResultCode.CG, messageInfo);
         } catch (Exception e) {
             LogUtils.error("获取消息失败!", e);
         }
@@ -139,7 +139,7 @@ public class MessageServiceImpl extends BaseServiceImpl<MessageInfo> implements 
     }
     @Override
     public ContentResult readMsg(BaseReq<MessageInfo> req) {
-        messageDao.executeUpdate("update message_info set status='YD' where status ='YSD' create_by=? and to_user=?", new Object[]{req.getContent().getCreateBy(), req.getUserToken().getUesrId()});
+        messageDao.executeUpdate("update message_info set status='YD' where status ='YSD' create_by=? and to_user=?", new Object[]{req.getContent().getCreateBy(), req.getUserToken().getUserId()});
         return new ContentResult(WebResultCode.CG);
 
     }
@@ -166,7 +166,7 @@ public class MessageServiceImpl extends BaseServiceImpl<MessageInfo> implements 
             LogUtils.info("发送消息内容为:{}", JsonUtils.toJson(messageInfo));
             jmsMessagingTemplate.convertAndSend(getQueueName(messageInfo.getToUser() + ""), messageInfo);
 //            activeMQUtils.sendMessage(messageInfo.getToUser() + "",messageInfo);
-            return new ContentResult<MessageInfo>(messageInfo);
+            return new ContentResult<MessageInfo>(WebResultCode.CG, messageInfo);
         } catch (Exception e) {
             LogUtils.error("发送消息失败!", e);
         }

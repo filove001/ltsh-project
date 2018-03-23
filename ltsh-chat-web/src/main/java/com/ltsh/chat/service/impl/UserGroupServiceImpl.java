@@ -27,8 +27,5 @@ public class UserGroupServiceImpl extends BaseServiceImpl<UserGroup> implements 
         this.baseDao = userGroupDao;
     }
 
-    @Override
-    public PageResult<UserGroup> page(PageReq<UserGroup> req) {
-        return super.page(req);
-    }
+
 }
